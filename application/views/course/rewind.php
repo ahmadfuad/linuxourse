@@ -9,6 +9,7 @@ $course = $this->m_course->detCourse($step,$detCourse['id_materi']);//sow detail
 <script type="text/javascript">
 	//when document ready
 	$(document).ready(function(){
+		$('#lang').val('<?php echo $_GET["lang"]?>');
 		$('#footer').hide();
 		$('#terminal').click(function(){//when click terminal
 			$('#linuxCommand').focus();//set autofocus textarea command
@@ -130,7 +131,8 @@ $course = $this->m_course->detCourse($step,$detCourse['id_materi']);//sow detail
 				<div style="background-color:#F5F5F5" class="full-height large-3 columns">
 					<ul style="/*background-color:#e7e7e7*/" class="button-group">
 						<li style="width:20%"><a href="<?php echo site_url('course/review/'.$this->uri->segment(4))?>" class="small secondary button"><strong>Back</strong></a></li>
-						<li style="width:80%"><a style="width:100%" href="#" data-dropdown="drop1" aria-controls="drop1" aria-expanded="false" class="small button secondary dropdown">Level <?php echo $detCourse['level']?></a><br>
+						<li style="width:20%"><a style="width:100%" href="<?php echo site_url();?>" class="small secondary button"><strong>Home</strong></a></li>
+						<li style="width:60%"><a style="width:100%" href="#" data-dropdown="drop1" aria-controls="drop1" aria-expanded="false" class="small button secondary dropdown">Level <?php echo $detCourse['level']?></a><br>
 							<ul style="max-width:none" id="drop1" data-dropdown-content class="dropdownme f-dropdown" aria-hidden="true" tabindex="-1">
 								<?php foreach($courseList as $cl):?>
 									<li>
@@ -163,35 +165,35 @@ $course = $this->m_course->detCourse($step,$detCourse['id_materi']);//sow detail
 							<p><strong>Case : <?php echo $course['title']?></strong><p>
 								<div class="full-height-80">
 									<p><?php 
-									switch ($_GET['lang']) {
-										case 'id':
+										switch ($_GET['lang']) {
+											case 'id':
 											$case = $course['course_case_id'];
 											break;
-										case 'en':
+											case 'en':
 											$case = $course['course_case_en'];
 											break;
-										default:
+											default:
 											$case = $course['course_case_en'];
 											break;
-									}
-									$case = nl2br($case);
-									$case = str_replace('[', '<', $case);
-									$case = str_replace(']', '>', $case);
-									echo $case;
-									?>
+										}
+										$case = nl2br($case);
+										$case = str_replace('[', '<', $case);
+										$case = str_replace(']', '>', $case);
+										echo $case;
+										?>
 									</p>
 									<hr/>
 									<h5><strong><a data-tooltip aria-haspopup="true" title="are you stuck?" onclick="showhint()">Hint !</a></strong></h5>
 									<p style="display:none" id="hint">
 										<?php
 										switch ($_GET['lang']) {
-										case 'id':
+											case 'id':
 											$hint = $course['hint_id'];
 											break;
-										case 'en':
+											case 'en':
 											$hint = $course['hint_en'];
 											break;
-										default:
+											default:
 											$hint = $course['hint_en'];
 											break;
 										}
@@ -221,6 +223,15 @@ $course = $this->m_course->detCourse($step,$detCourse['id_materi']);//sow detail
 									<div id="btnGroupAction" style="padding-top:10px" class="large-6 columns">
 										<a onclick="check()" class="small button">Check</a>  <a onclick="clearTerminal()" title="clear terminal" href="#" class="small alert button">X</a><span style="padding:5px;color:#fff;display:none" id="loadercheck"><img style="width:30px;margin-right:5px;" src="<?php echo base_url('./assets/img/loader.gif')?>"/>checking..</span><span style="padding:5px;color:#fff;display:none" id="loaderexe"><img style="width:30px;margin-right:5px;" src="<?php echo base_url('./assets/img/loader.gif')?>"/>execute..</span>
 									</div>
+									<div style="float:right;padding-top:10px" class="large-4 columns">
+										<form class="large-12 columns" method="GET" action="<?php echo site_url('course/rewind/'.$this->uri->segment(3).'/'.$this->uri->segment(4));?>" class="button large">
+											<select id="lang" style="height:37px;color:gray" class="small-9 columns" name="lang">
+												<option value="en">English</option>
+												<option value="id">Indonesia</option>
+											</select>
+											<button class="button secondary small small-3 columns" type="submit"><i class="fi-refresh"></i></button>
+										</form>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -228,10 +239,10 @@ $course = $this->m_course->detCourse($step,$detCourse['id_materi']);//sow detail
 				</section>
 				<div id="test"></div>
 				<!-- Histats.com  START (hidden counter)-->
-<script type="text/javascript">document.write(unescape("%3Cscript src=%27http://s10.histats.com/js15.js%27 type=%27text/javascript%27%3E%3C/script%3E"));</script>
-<a href="http://www.histats.com" target="_blank" title="web page hit counter" ><script  type="text/javascript" >
-try {Histats.start(1,2972237,4,0,0,0,"");
-Histats.track_hits();} catch(err){};
-</script></a>
-<noscript><a href="http://www.histats.com" target="_blank"><img  src="http://sstatic1.histats.com/0.gif?2972237&101" alt="web page hit counter" border="0"></a></noscript>
+				<script type="text/javascript">document.write(unescape("%3Cscript src=%27http://s10.histats.com/js15.js%27 type=%27text/javascript%27%3E%3C/script%3E"));</script>
+				<a href="http://www.histats.com" target="_blank" title="web page hit counter" ><script  type="text/javascript" >
+					try {Histats.start(1,2972237,4,0,0,0,"");
+					Histats.track_hits();} catch(err){};
+				</script></a>
+				<noscript><a href="http://www.histats.com" target="_blank"><img  src="http://sstatic1.histats.com/0.gif?2972237&101" alt="web page hit counter" border="0"></a></noscript>
 <!-- Histats.com  END  -->

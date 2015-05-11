@@ -25,13 +25,14 @@
 <section id="welcome">
 	<div class="row">
 		<div class="large-7 columns">
-			<img style="width:90%;margin-top:20px" src="<?php echo base_url('assets/img/home-view.png')?>">
+			<img style="width:90%;margin-top:50px" src="<?php echo base_url('assets/img/home-view.png')?>">
 			<br/><br/>
-			<hr/>
 			<div class="welcome_message">
-				<h1 style="color:#fff">Learn Linux Without Install Linux</h1>
+				<h1 style="color:#fff">LINUXOURSE (BETA)</h1>
+				<h5 style="color:#fff">Learn Linux Without Install Linux</h5>
+			<hr/>
 				<p>
-					<!-- Belajar Linux dengan cara berbeda, hadapi kasusnya pecahkan dengan live command linux, jika anda berhasil lanjut ke level selanjutnya, setelah finish sebarkan profil anda ke publik untuk menunjukan kemampuan penggunaan linux anda. --> 
+					<!-- Belajar Linux dengan cara berbeda, hadapi kasusnya pecahkan dengan live command linux, jika anda berhasil lanjut ke level selanjutnya, setelah finish sebarkan profil anda ke publik untuk menunjukan kemampuan penggunaan linux anda. -->
 					Learning Linux in a different way, to solve the case dealing with a live linux command, if you managed to go to the next level, after finishing the public to spread your profile to show your ability to use linux.
 				</p>
 			</div>
@@ -40,38 +41,45 @@
 		<div class="large-4 columns">
 			<div class="home_login">
 				<br/>
-				<!-- <dl style="padding:0;border:1px solid #fff" class="tabs" data-tab>
-					<dd class="small-6 columns active"><a style="background-color:#fff" class="tab-home" role="tab" href="#register">Login / Register</a></dd>
-					<dd class="small-6 columns"><a class="tab-home" role="tab"></a></dd>
-				</dl> -->
-				<div style="padding:20px 20px;background-color:#fff" class="tabs-content">
+				<dl style="padding:0;border:1px solid #fff" class="tabs" data-tab>
+					<dd style="padding:0;text-align:center;}" class="small-6 columns active"><a class="tab-home" role="tab" href="#register">Register</a></dd>
+					<dd style="padding:0;text-align:center;}" class="small-6 columns"><a class="tab-home" role="tab" href="#login">Login</a></dd>
+				</dl>
+				<div style="padding:10px 20px;background-color:#fff" class="tabs-content">
+					<!-- register -->
 					<div class="content active" id="register">
-						<p>Login:</p>
-						<hr/>
-						<form method="POST" action="<?php echo site_url('p/login') ?>">
+						<form method="POST" action="<?php echo site_url('p/register');?>">
 							<div class="row">
 								<div class="large-12 columns">
-									<input name="input_username" style="height:40px" type="text" placeholder="username" value="<?php if(!empty($_POST['input_username'])){echo $_POST['input_username'];}?>" required>
-								</div>								
-							</div>
-							<div class="row">
-								<div class="large-12 columns">
-									<input name="input_password" style="height:40px" type="password" placeholder="password" required>
-								</div>								
-							</div>
-							<div class="row">
-								<div class="large-12 columns">
-									<?php 
-									$error = validation_errors();
-									if(!empty($error)){?>
-									<small class="error"><?php echo $error;?></small>
-									<?php }else if(!empty($error)){?>
-									<small class="error"><?php echo $error;?></small>
-									<?php }?>
-									<input style="width:100%" class="button" type="submit" value="Login">
+									<input name="input_username" style="height:40px" type="text" placeholder="username" value="<?php if(!empty($username)){echo $username;}?>" required>
 								</div>
 							</div>
-						</form>	
+							<div class="row">
+								<div class="large-12 columns">
+									<input name="input_fullname" style="height:40px" type="text" placeholder="fullname" value="<?php if(!empty($username)){echo $fullname;}?>" required>
+								</div>
+							</div>
+							<div class="row">
+								<div class="large-12 columns">
+									<input name="input_email" style="height:40px" type="email" placeholder="email" value="<?php if(!empty($username)){echo $email;}?>" required>
+								</div>
+							</div>
+							<div class="row">
+								<div class="large-12 columns">
+									<input name="input_password" style="height:40px" type="password" placeholder="password"  required>
+								</div>
+							</div>
+							<div class="row">
+								<div class="large-12 columns">
+									<input name="input_passconf" style="height:40px" type="password" placeholder="password again" required>
+								</div>
+							</div>
+							<div style="padding:0" class="row">
+								<div class="large-12 columns">
+									<input style="margin:0;width:100%" class="button" type="submit" value="Register">
+								</div>
+							</div>
+						</form>
 						<table style="border:0;margin:0">
 							<tr>
 								<td><hr/></td>
@@ -83,6 +91,45 @@
 						<a class="small-6 columns button" style="margin:0;background-color:rgb(77, 117, 202);display:block" href="<?php echo site_url('oauth/facebook/facebook.php')?>"><i style="font-size:20px;vertical-align:middle" class="fi-social-facebook"></i></a>
 						<a class="small-6 columns button" style="margin:0;background-color:rgb(202, 77, 77);display:block" href="<?php echo site_url('oauth/googleplus')?>"><i style="font-size:20px;vertical-align:middle" class="fi-social-google-plus"></i></a>
 						</div>
+						<!-- end of register -->
+						<!-- login -->
+						<div class="content" id="login">
+							<form method="POST" action="<?php echo site_url('p/login') ?>">
+								<div class="row">
+									<div class="large-12 columns">
+										<input name="input_username" style="height:40px" type="text" placeholder="username" value="<?php if(!empty($_POST['input_username'])){echo $_POST['input_username'];}?>" required>
+									</div>
+								</div>
+								<div class="row">
+									<div class="large-12 columns">
+										<input name="input_password" style="height:40px" type="password" placeholder="password" required>
+									</div>
+								</div>
+								<div class="row">
+									<div class="large-12 columns">
+										<?php
+										$error = validation_errors();
+										if(!empty($error)){?>
+										<small class="error"><?php echo $error;?></small>
+										<?php }else if(!empty($error)){?>
+										<small class="error"><?php echo $error;?></small>
+										<?php }?>
+										<input style="width:100%" class="button" type="submit" value="Login">
+									</div>
+								</div>
+							</form>
+							<table style="border:0;margin:0">
+								<tr>
+									<td><hr/></td>
+									<td style="width:100px"><center><small>login/register via</small></center></td>
+									<td><hr/></td>
+								</tr>
+							</table>
+							<div class="row"></div>
+							<a class="small-6 columns button" style="margin:0;background-color:rgb(77, 117, 202);display:block" href="<?php echo site_url('oauth/facebook/facebook.php')?>"><i style="font-size:20px;vertical-align:middle" class="fi-social-facebook"></i></a>
+							<a class="small-6 columns button" style="margin:0;background-color:rgb(202, 77, 77);display:block" href="<?php echo site_url('oauth/googleplus')?>"><i style="font-size:20px;vertical-align:middle" class="fi-social-google-plus"></i></a>
+						</div>
+						<!-- start of login -->
 					</div>
 			</div>
 		</div>
@@ -107,14 +154,14 @@
 		<!-- available course -->
 		<section id="otherCourse">
 			<center>
-				<div class="row">		
+				<div class="row">
 					<div class="large-12 collapse" columns>
 						<h2 style="color:#fff;margin:0">Available Course Materi</h2>
 						<p>improve the mastery of Linux by following other courses</p>
 						<!-- skill completion -->
 						<div class="row">
-							<?php 
-							foreach($allMateri as $am):	
+							<?php
+							foreach($allMateri as $am):
 								$idMateri = base64_encode(base64_encode($am['id_materi']));
 							$idMateri = str_replace('=', '', $idMateri);
 							$titleMateri = str_replace(' ', '-', $am['title']);
@@ -122,22 +169,22 @@
 							else{$logo = base_url('assets/img/logo/gray other logo.png'); }
 							?>
 							<a id="btn_course_item" href="#btn_resume">
-								<div style="float:left;padding: 0.9375rem;" class="large-4 columns">						
+								<div style="float:left;padding: 0.9375rem;" class="large-4 columns">
 									<div style="background-color:#FFF" class="materi-item">
 										<center>
 											<img src="<?php echo $logo?>"/>
 										</center>
 										<div class="materi-title">
-											<h4><?php echo $am['title'];?></h4>								
+											<h4><?php echo $am['title'];?></h4>
 										</div>
 										<div class="course-detail">
 											<?php echo $am['description'];?>
 										</div>
 										<a href="<?php echo site_url('course/syllabus/'.$idMateri.'/'.$titleMateri)?>" class="button">start</a>
 									</div>
-								</div>					
-							</a>						
-						<?php endforeach;?>				
+								</div>
+							</a>
+						<?php endforeach;?>
 					</div>
 				</div>
 			</div>
@@ -163,7 +210,7 @@
 					<h5>Total Course</h5>
 					<strong><h3><?php echo $this->db->count_all_results('course');?></h3></strong>
 				</center>
-			</div>			
+			</div>
 		</div>
 	</section>
 
@@ -176,7 +223,7 @@
 		<a class="close-reveal-modal">&#215;</a>
 	</div>
 
-	<?php //get error message 
+	<?php //get error message
 	if(!empty($_GET['error'])): ?>
 	<div id="showError" class="reveal-modal small" data-reveal>
 		<h2>Something wrong</h2>
@@ -185,7 +232,7 @@
 	</div>
 	<?php endif;?>
 
-	<?php //get success message 
+	<?php //get success message
 	if(!empty($_GET['success'])): ?>
 	<div id="showSuccess" class="reveal-modal small" data-reveal>
 		<h2>Success</h2>
@@ -193,4 +240,3 @@
 		<a class="close-reveal-modal">&#215;</a>
 	</div>
 <?php endif;?>
-

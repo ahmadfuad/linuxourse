@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.0.4.1
+-- version 4.2.11
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 17, 2015 at 06:37 
--- Server version: 5.6.12
--- PHP Version: 5.5.3
+-- Generation Time: May 06, 2015 at 07:23 
+-- Server version: 5.6.21
+-- PHP Version: 5.6.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -19,8 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `idmore_linuxourse`
 --
-CREATE DATABASE IF NOT EXISTS `idmore_linuxourse` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `idmore_linuxourse`;
 
 -- --------------------------------------------------------
 
@@ -29,11 +27,9 @@ USE `idmore_linuxourse`;
 --
 
 CREATE TABLE IF NOT EXISTS `available_dir` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `directory` varchar(50) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `directory` (`directory`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
+`id` int(11) NOT NULL,
+  `directory` varchar(50) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `available_dir`
@@ -62,18 +58,14 @@ INSERT INTO `available_dir` (`id`, `directory`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `badge` (
-  `id_badge` int(11) NOT NULL AUTO_INCREMENT,
+`id_badge` int(11) NOT NULL,
   `id_materi` int(11) DEFAULT NULL,
   `id_level` int(11) DEFAULT NULL,
   `id_course` int(11) DEFAULT NULL,
   `title` varchar(50) NOT NULL,
   `description` varchar(300) NOT NULL,
-  `logo` varchar(20) NOT NULL,
-  PRIMARY KEY (`id_badge`),
-  KEY `id_course` (`id_course`),
-  KEY `id_materi` (`id_materi`),
-  KEY `id_level` (`id_level`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+  `logo` varchar(20) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `badge`
@@ -90,16 +82,14 @@ INSERT INTO `badge` (`id_badge`, `id_materi`, `id_level`, `id_course`, `title`, 
 --
 
 CREATE TABLE IF NOT EXISTS `certivicate` (
-  `id_certivicate` bigint(20) NOT NULL AUTO_INCREMENT,
+`id_certivicate` bigint(20) NOT NULL,
   `reqdate` datetime NOT NULL,
   `acceptdate` datetime NOT NULL,
   `id_user` bigint(20) NOT NULL,
   `address` varchar(500) NOT NULL,
   `zipcode` int(11) NOT NULL,
-  `status` enum('unread','waiting','sent','failed') NOT NULL,
-  PRIMARY KEY (`id_certivicate`),
-  KEY `id_user` (`id_user`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  `status` enum('unread','waiting','sent','failed') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -108,11 +98,10 @@ CREATE TABLE IF NOT EXISTS `certivicate` (
 --
 
 CREATE TABLE IF NOT EXISTS `country` (
-  `id_country` int(11) NOT NULL AUTO_INCREMENT,
+`id_country` int(11) NOT NULL,
   `country` varchar(20) NOT NULL,
-  `flag` varchar(20) NOT NULL,
-  PRIMARY KEY (`id_country`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+  `flag` varchar(20) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `country`
@@ -130,7 +119,7 @@ INSERT INTO `country` (`id_country`, `country`, `flag`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `course` (
-  `id_course` int(11) NOT NULL AUTO_INCREMENT,
+`id_course` int(11) NOT NULL,
   `id_level` int(11) NOT NULL,
   `step` int(11) NOT NULL,
   `title` varchar(50) NOT NULL,
@@ -143,10 +132,8 @@ CREATE TABLE IF NOT EXISTS `course` (
   `command` text NOT NULL,
   `custom_controller` varchar(20) NOT NULL,
   `status` enum('posted','draft') NOT NULL,
-  `editdate` datetime NOT NULL,
-  PRIMARY KEY (`id_course`),
-  KEY `id_level` (`id_level`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=53 ;
+  `editdate` datetime NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `course`
@@ -208,7 +195,7 @@ INSERT INTO `course` (`id_course`, `id_level`, `step`, `title`, `description`, `
 --
 
 CREATE TABLE IF NOT EXISTS `discussion` (
-  `id_discuss` bigint(20) NOT NULL AUTO_INCREMENT,
+`id_discuss` bigint(20) NOT NULL,
   `title` varchar(100) NOT NULL,
   `content` text NOT NULL,
   `postdate` datetime NOT NULL,
@@ -216,10 +203,8 @@ CREATE TABLE IF NOT EXISTS `discussion` (
   `id_user` bigint(20) NOT NULL,
   `type` enum('ask','thread') NOT NULL,
   `views` int(11) NOT NULL,
-  `status` enum('posted','locked') NOT NULL,
-  PRIMARY KEY (`id_discuss`),
-  KEY `id_user` (`id_user`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+  `status` enum('posted','locked') NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `discussion`
@@ -237,17 +222,14 @@ INSERT INTO `discussion` (`id_discuss`, `title`, `content`, `postdate`, `updated
 --
 
 CREATE TABLE IF NOT EXISTS `discussion_comment` (
-  `id_comment` bigint(20) NOT NULL AUTO_INCREMENT,
+`id_comment` bigint(20) NOT NULL,
   `id_discussion` bigint(20) NOT NULL,
   `id_user` bigint(20) NOT NULL,
   `commentdate` datetime NOT NULL,
   `updatedate` datetime NOT NULL,
   `comment` varchar(500) NOT NULL,
-  `status` enum('posted','locked') NOT NULL,
-  PRIMARY KEY (`id_comment`),
-  KEY `id_discussion` (`id_discussion`,`id_user`),
-  KEY `id_user` (`id_user`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+  `status` enum('posted','locked') NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `discussion_comment`
@@ -266,9 +248,7 @@ INSERT INTO `discussion_comment` (`id_comment`, `id_discussion`, `id_user`, `com
 CREATE TABLE IF NOT EXISTS `discussion_comment_action` (
   `id_comment` bigint(20) NOT NULL,
   `id_user` bigint(20) NOT NULL,
-  `give` enum('up','down') NOT NULL,
-  KEY `id_comment` (`id_comment`,`id_user`),
-  KEY `id_user` (`id_user`)
+  `give` enum('up','down') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -286,14 +266,12 @@ INSERT INTO `discussion_comment_action` (`id_comment`, `id_user`, `give`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `level` (
-  `id_level` int(11) NOT NULL AUTO_INCREMENT,
+`id_level` int(11) NOT NULL,
   `id_materi` int(11) NOT NULL,
   `level` int(11) NOT NULL,
   `title` varchar(50) NOT NULL,
-  `description` varchar(3000) NOT NULL,
-  PRIMARY KEY (`id_level`),
-  KEY `id_materi` (`id_materi`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
+  `description` varchar(3000) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `level`
@@ -320,15 +298,13 @@ INSERT INTO `level` (`id_level`, `id_materi`, `level`, `title`, `description`) V
 --
 
 CREATE TABLE IF NOT EXISTS `ls_dir` (
-  `id_ls_dir` int(11) NOT NULL AUTO_INCREMENT,
+`id_ls_dir` int(11) NOT NULL,
   `id_available_dir` int(11) NOT NULL,
   `type` enum('-','s') NOT NULL,
   `name` varchar(50) NOT NULL,
   `attributes` varchar(50) NOT NULL,
-  `content` text NOT NULL,
-  PRIMARY KEY (`id_ls_dir`),
-  KEY `id_available_dir` (`id_available_dir`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=23 ;
+  `content` text NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `ls_dir`
@@ -360,14 +336,13 @@ INSERT INTO `ls_dir` (`id_ls_dir`, `id_available_dir`, `type`, `name`, `attribut
 --
 
 CREATE TABLE IF NOT EXISTS `materi` (
-  `id_materi` int(11) NOT NULL AUTO_INCREMENT,
+`id_materi` int(11) NOT NULL,
   `title` varchar(50) NOT NULL,
   `description` varchar(300) NOT NULL,
   `status` enum('published','unpublish') NOT NULL,
   `adddate` datetime NOT NULL,
-  `logo` varchar(100) NOT NULL,
-  PRIMARY KEY (`id_materi`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+  `logo` varchar(100) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `materi`
@@ -386,16 +361,14 @@ INSERT INTO `materi` (`id_materi`, `title`, `description`, `status`, `adddate`, 
 --
 
 CREATE TABLE IF NOT EXISTS `news` (
-  `id_news` smallint(6) NOT NULL AUTO_INCREMENT,
+`id_news` smallint(6) NOT NULL,
   `id_user` int(20) DEFAULT NULL,
   `title` varchar(100) NOT NULL,
   `content` text NOT NULL,
   `postdate` datetime NOT NULL,
   `updatedate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `status` enum('published','draft') NOT NULL,
-  PRIMARY KEY (`id_news`),
-  KEY `id_user` (`id_user`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=27 ;
+  `status` enum('published','draft') NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `news`
@@ -436,13 +409,12 @@ INSERT INTO `news` (`id_news`, `id_user`, `title`, `content`, `postdate`, `updat
 --
 
 CREATE TABLE IF NOT EXISTS `signature` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `startdate` datetime NOT NULL,
   `enddate` datetime NOT NULL,
   `name` varchar(200) NOT NULL,
-  `signature` varchar(100) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+  `signature` varchar(100) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `signature`
@@ -458,7 +430,7 @@ INSERT INTO `signature` (`id`, `startdate`, `enddate`, `name`, `signature`) VALU
 --
 
 CREATE TABLE IF NOT EXISTS `user` (
-  `id_user` bigint(20) NOT NULL AUTO_INCREMENT,
+`id_user` bigint(20) NOT NULL,
   `username` varchar(10) NOT NULL,
   `email` varchar(50) NOT NULL,
   `fullname` varchar(30) NOT NULL,
@@ -470,19 +442,15 @@ CREATE TABLE IF NOT EXISTS `user` (
   `status` enum('waiting','active','banned') NOT NULL,
   `pp` text NOT NULL,
   `about` varchar(200) NOT NULL,
-  `verified` tinyint(1) NOT NULL,
-  PRIMARY KEY (`id_user`),
-  UNIQUE KEY `username` (`username`),
-  UNIQUE KEY `email` (`email`),
-  KEY `id_country` (`id_country`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=21 ;
+  `verified` tinyint(1) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`id_user`, `username`, `email`, `fullname`, `id_country`, `register_date`, `last_login`, `password`, `level`, `status`, `pp`, `about`, `verified`) VALUES
-(2, 'yussan', 'yusuf@kompetisi.id', 'Yusuf Akhsan Hidayat', 1, '2014-11-26 00:00:00', '2015-03-16 04:05:04', 'be71a8e61b64f613366380071fae3b38', 'student', 'active', 'cd790f1e7cfb7eef1fe75a2e5a25fc34.jpg', 'happy command', 1),
+(2, 'yussan', 'yusuf@kompetisi.id', 'Yusuf Akhsan Hidayat', 1, '2014-11-26 00:00:00', '2015-04-11 03:53:34', 'be71a8e61b64f613366380071fae3b38', 'student', 'active', 'cd790f1e7cfb7eef1fe75a2e5a25fc34.jpg', 'happy command', 1),
 (6, 'lisa', 'lisa@japan.jp', 'Risa Oribe', 1, '2015-01-14 11:36:02', '2015-03-16 04:05:04', 'be71a8e61b64f613366380071fae3b38', 'student', 'active', 'lisa.jpg', 'prety linuxer', 1),
 (19, 'lucy', 'yussandeveloper@gmail.com', 'Lucy Airgard', 3, '2015-03-05 10:45:48', '2015-03-16 04:05:04', 'be71a8e61b64f613366380071fae3b38', 'student', 'active', '08ca6985c149142b0813f540731ced35.jpg', '', 1),
 (20, 'ahmadfuad', 'ahmad.fuad1945@gmail.com', 'Ahmad Fuad', 3, '2015-03-09 03:26:55', '2015-03-16 04:05:04', 'be71a8e61b64f613366380071fae3b38', 'student', 'active', '', '', 0);
@@ -494,14 +462,11 @@ INSERT INTO `user` (`id_user`, `username`, `email`, `fullname`, `id_country`, `r
 --
 
 CREATE TABLE IF NOT EXISTS `user_badge` (
-  `id_user_badge` bigint(20) NOT NULL AUTO_INCREMENT,
+`id_user_badge` bigint(20) NOT NULL,
   `id_user` bigint(20) NOT NULL,
   `id_badge` int(11) NOT NULL,
-  `getdate` datetime NOT NULL,
-  PRIMARY KEY (`id_user_badge`),
-  KEY `id_user` (`id_user`,`id_badge`),
-  KEY `id_badge` (`id_badge`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+  `getdate` datetime NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `user_badge`
@@ -518,7 +483,7 @@ INSERT INTO `user_badge` (`id_user_badge`, `id_user`, `id_badge`, `getdate`) VAL
 --
 
 CREATE TABLE IF NOT EXISTS `user_course` (
-  `id_user_course` bigint(20) NOT NULL AUTO_INCREMENT,
+`id_user_course` bigint(20) NOT NULL,
   `id_user` bigint(20) NOT NULL,
   `id_materi` int(11) NOT NULL,
   `id_level` int(11) NOT NULL,
@@ -526,13 +491,8 @@ CREATE TABLE IF NOT EXISTS `user_course` (
   `startdate` datetime NOT NULL,
   `lastdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `finishtime` text NOT NULL,
-  `status` enum('incomplete','completed') NOT NULL,
-  PRIMARY KEY (`id_user_course`),
-  KEY `id_user` (`id_user`),
-  KEY `id_course` (`id_course`),
-  KEY `id_materi` (`id_materi`),
-  KEY `id_level` (`id_level`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=24 ;
+  `status` enum('incomplete','completed') NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `user_course`
@@ -554,7 +514,7 @@ INSERT INTO `user_course` (`id_user_course`, `id_user`, `id_materi`, `id_level`,
 --
 
 CREATE TABLE IF NOT EXISTS `user_manage` (
-  `id_user_manage` int(11) NOT NULL AUTO_INCREMENT,
+`id_user_manage` int(11) NOT NULL,
   `username` varchar(10) NOT NULL,
   `password` text NOT NULL,
   `fullname` varchar(50) NOT NULL,
@@ -563,9 +523,8 @@ CREATE TABLE IF NOT EXISTS `user_manage` (
   `level` enum('admin','moderator') NOT NULL,
   `status` enum('active','banned') NOT NULL,
   `registerdate` datetime NOT NULL,
-  `loginlog` text NOT NULL,
-  PRIMARY KEY (`id_user_manage`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+  `loginlog` text NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `user_manage`
@@ -575,6 +534,196 @@ INSERT INTO `user_manage` (`id_user_manage`, `username`, `password`, `fullname`,
 (1, 'yussan', 'be71a8e61b64f613366380071fae3b38', 'Yusuf A.H', '', 'yusuf.hi@students.amikom.ac.id', 'admin', 'active', '2015-01-19 22:45:04', '|2015-01-19 04:46:54|2015-01-20 02:55:20|2015-01-20 05:45:03|2015-01-20 04:06:11|2015-01-21 02:21:50|2015-01-21 08:19:03|2015-01-21 10:59:23|2015-01-22 04:32:22|2015-01-22 05:16:37|2015-01-22 12:47:39|2015-01-23 02:48:04|2015-01-24 02:54:49|2015-01-24 05:14:21|2015-01-26 02:49:46|2015-01-27 10:47:54|2015-01-27 12:58:40|2015-01-28 01:27:12|2015-01-29 11:39:54|2015-01-30 12:08:36|2015-01-30 08:57:02|2015-01-30 12:35:27|2015-01-30 03:41:45|2015-01-31 03:22:20|2015-01-31 05:16:00|2015-01-31 08:31:57|2015-01-31 10:02:34|2015-02-01 02:16:01|2015-02-03 06:52:46|2015-02-05 11:40:12|2015-02-06 10:43:37|2015-02-06 08:05:12|2015-02-07 08:05:46|2015-02-08 05:34:37|2015-02-10 12:07:58|2015-02-11 11:40:31|2015-02-12 06:43:44|2015-02-13 09:51:38|2015-02-13 05:45:19|2015-02-14 11:26:12|2015-02-16 10:08:08|2015-02-16 01:46:23|2015-02-16 06:34:16|2015-02-18 11:59:06|2015-02-19 12:03:54|2015-02-21 08:07:35|2015-02-21 08:38:09|2015-02-22 08:53:51|2015-02-23 08:58:21|2015-02-24 08:03:33|2015-02-24 11:05:51|2015-02-24 07:15:26|2015-02-25 12:21:16|2015-02-25 06:46:25|2015-02-25 07:54:57|2015-02-25 08:32:10|2015-02-25 08:42:44|2015-02-25 09:26:58|2015-02-25 06:35:47|2015-02-25 09:49:53|2015-02-26 07:15:59|2015-02-26 08:40:04|2015-02-27 07:33:00|2015-02-28 09:24:28|2015-03-01 08:31:51|2015-03-01 10:36:53|2015-03-01 10:58:52|2015-03-01 11:10:46|2015-03-01 01:05:17|2015-03-01 03:38:15|2015-03-06 09:18:28|2015-03-06 09:18:33|2015-03-06 09:18:39|2015-03-06 09:19:08|2015-03-06 09:20:05|2015-03-06 09:20:30|2015-03-06 06:18:47|2015-03-07 12:03:21|2015-03-09 10:48:17|2015-03-09 11:36:00|2015-03-09 11:56:02|2015-03-15 06:24:12|2015-03-16 09:41:09');
 
 --
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `available_dir`
+--
+ALTER TABLE `available_dir`
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `directory` (`directory`);
+
+--
+-- Indexes for table `badge`
+--
+ALTER TABLE `badge`
+ ADD PRIMARY KEY (`id_badge`), ADD KEY `id_course` (`id_course`), ADD KEY `id_materi` (`id_materi`), ADD KEY `id_level` (`id_level`);
+
+--
+-- Indexes for table `certivicate`
+--
+ALTER TABLE `certivicate`
+ ADD PRIMARY KEY (`id_certivicate`), ADD KEY `id_user` (`id_user`);
+
+--
+-- Indexes for table `country`
+--
+ALTER TABLE `country`
+ ADD PRIMARY KEY (`id_country`);
+
+--
+-- Indexes for table `course`
+--
+ALTER TABLE `course`
+ ADD PRIMARY KEY (`id_course`), ADD KEY `id_level` (`id_level`);
+
+--
+-- Indexes for table `discussion`
+--
+ALTER TABLE `discussion`
+ ADD PRIMARY KEY (`id_discuss`), ADD KEY `id_user` (`id_user`);
+
+--
+-- Indexes for table `discussion_comment`
+--
+ALTER TABLE `discussion_comment`
+ ADD PRIMARY KEY (`id_comment`), ADD KEY `id_discussion` (`id_discussion`,`id_user`), ADD KEY `id_user` (`id_user`);
+
+--
+-- Indexes for table `discussion_comment_action`
+--
+ALTER TABLE `discussion_comment_action`
+ ADD KEY `id_comment` (`id_comment`,`id_user`), ADD KEY `id_user` (`id_user`);
+
+--
+-- Indexes for table `level`
+--
+ALTER TABLE `level`
+ ADD PRIMARY KEY (`id_level`), ADD KEY `id_materi` (`id_materi`);
+
+--
+-- Indexes for table `ls_dir`
+--
+ALTER TABLE `ls_dir`
+ ADD PRIMARY KEY (`id_ls_dir`), ADD KEY `id_available_dir` (`id_available_dir`);
+
+--
+-- Indexes for table `materi`
+--
+ALTER TABLE `materi`
+ ADD PRIMARY KEY (`id_materi`);
+
+--
+-- Indexes for table `news`
+--
+ALTER TABLE `news`
+ ADD PRIMARY KEY (`id_news`), ADD KEY `id_user` (`id_user`);
+
+--
+-- Indexes for table `signature`
+--
+ALTER TABLE `signature`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `user`
+--
+ALTER TABLE `user`
+ ADD PRIMARY KEY (`id_user`), ADD UNIQUE KEY `username` (`username`), ADD UNIQUE KEY `email` (`email`), ADD KEY `id_country` (`id_country`);
+
+--
+-- Indexes for table `user_badge`
+--
+ALTER TABLE `user_badge`
+ ADD PRIMARY KEY (`id_user_badge`), ADD KEY `id_user` (`id_user`,`id_badge`), ADD KEY `id_badge` (`id_badge`);
+
+--
+-- Indexes for table `user_course`
+--
+ALTER TABLE `user_course`
+ ADD PRIMARY KEY (`id_user_course`), ADD KEY `id_user` (`id_user`), ADD KEY `id_course` (`id_course`), ADD KEY `id_materi` (`id_materi`), ADD KEY `id_level` (`id_level`);
+
+--
+-- Indexes for table `user_manage`
+--
+ALTER TABLE `user_manage`
+ ADD PRIMARY KEY (`id_user_manage`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `available_dir`
+--
+ALTER TABLE `available_dir`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
+--
+-- AUTO_INCREMENT for table `badge`
+--
+ALTER TABLE `badge`
+MODIFY `id_badge` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `certivicate`
+--
+ALTER TABLE `certivicate`
+MODIFY `id_certivicate` bigint(20) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `country`
+--
+ALTER TABLE `country`
+MODIFY `id_country` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT for table `course`
+--
+ALTER TABLE `course`
+MODIFY `id_course` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=53;
+--
+-- AUTO_INCREMENT for table `discussion`
+--
+ALTER TABLE `discussion`
+MODIFY `id_discuss` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
+--
+-- AUTO_INCREMENT for table `discussion_comment`
+--
+ALTER TABLE `discussion_comment`
+MODIFY `id_comment` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+--
+-- AUTO_INCREMENT for table `level`
+--
+ALTER TABLE `level`
+MODIFY `id_level` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
+--
+-- AUTO_INCREMENT for table `ls_dir`
+--
+ALTER TABLE `ls_dir`
+MODIFY `id_ls_dir` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=23;
+--
+-- AUTO_INCREMENT for table `materi`
+--
+ALTER TABLE `materi`
+MODIFY `id_materi` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+--
+-- AUTO_INCREMENT for table `news`
+--
+ALTER TABLE `news`
+MODIFY `id_news` smallint(6) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=27;
+--
+-- AUTO_INCREMENT for table `signature`
+--
+ALTER TABLE `signature`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `user`
+--
+ALTER TABLE `user`
+MODIFY `id_user` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=21;
+--
+-- AUTO_INCREMENT for table `user_badge`
+--
+ALTER TABLE `user_badge`
+MODIFY `id_user_badge` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `user_course`
+--
+ALTER TABLE `user_course`
+MODIFY `id_user_course` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=24;
+--
+-- AUTO_INCREMENT for table `user_manage`
+--
+ALTER TABLE `user_manage`
+MODIFY `id_user_manage` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
 -- Constraints for dumped tables
 --
 
@@ -582,81 +731,81 @@ INSERT INTO `user_manage` (`id_user_manage`, `username`, `password`, `fullname`,
 -- Constraints for table `badge`
 --
 ALTER TABLE `badge`
-  ADD CONSTRAINT `badge_ibfk_1` FOREIGN KEY (`id_course`) REFERENCES `course` (`id_course`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `badge_ibfk_2` FOREIGN KEY (`id_level`) REFERENCES `level` (`id_level`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `badge_ibfk_3` FOREIGN KEY (`id_materi`) REFERENCES `materi` (`id_materi`) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT `badge_ibfk_1` FOREIGN KEY (`id_course`) REFERENCES `course` (`id_course`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `badge_ibfk_2` FOREIGN KEY (`id_level`) REFERENCES `level` (`id_level`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `badge_ibfk_3` FOREIGN KEY (`id_materi`) REFERENCES `materi` (`id_materi`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `certivicate`
 --
 ALTER TABLE `certivicate`
-  ADD CONSTRAINT `certivicate_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT `certivicate_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `course`
 --
 ALTER TABLE `course`
-  ADD CONSTRAINT `course_ibfk_1` FOREIGN KEY (`id_level`) REFERENCES `level` (`id_level`) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT `course_ibfk_1` FOREIGN KEY (`id_level`) REFERENCES `level` (`id_level`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `discussion`
 --
 ALTER TABLE `discussion`
-  ADD CONSTRAINT `discussion_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT `discussion_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `discussion_comment`
 --
 ALTER TABLE `discussion_comment`
-  ADD CONSTRAINT `discussion_comment_ibfk_1` FOREIGN KEY (`id_discussion`) REFERENCES `discussion` (`id_discuss`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `discussion_comment_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT `discussion_comment_ibfk_1` FOREIGN KEY (`id_discussion`) REFERENCES `discussion` (`id_discuss`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `discussion_comment_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `discussion_comment_action`
 --
 ALTER TABLE `discussion_comment_action`
-  ADD CONSTRAINT `discussion_comment_action_ibfk_1` FOREIGN KEY (`id_comment`) REFERENCES `discussion_comment` (`id_comment`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `discussion_comment_action_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT `discussion_comment_action_ibfk_1` FOREIGN KEY (`id_comment`) REFERENCES `discussion_comment` (`id_comment`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `discussion_comment_action_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `level`
 --
 ALTER TABLE `level`
-  ADD CONSTRAINT `level_ibfk_1` FOREIGN KEY (`id_materi`) REFERENCES `materi` (`id_materi`) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT `level_ibfk_1` FOREIGN KEY (`id_materi`) REFERENCES `materi` (`id_materi`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `ls_dir`
 --
 ALTER TABLE `ls_dir`
-  ADD CONSTRAINT `ls_dir_ibfk_1` FOREIGN KEY (`id_available_dir`) REFERENCES `available_dir` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT `ls_dir_ibfk_1` FOREIGN KEY (`id_available_dir`) REFERENCES `available_dir` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `news`
 --
 ALTER TABLE `news`
-  ADD CONSTRAINT `news_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user_manage` (`id_user_manage`) ON DELETE SET NULL ON UPDATE SET NULL;
+ADD CONSTRAINT `news_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user_manage` (`id_user_manage`) ON DELETE SET NULL ON UPDATE SET NULL;
 
 --
 -- Constraints for table `user`
 --
 ALTER TABLE `user`
-  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`id_country`) REFERENCES `country` (`id_country`) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`id_country`) REFERENCES `country` (`id_country`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `user_badge`
 --
 ALTER TABLE `user_badge`
-  ADD CONSTRAINT `user_badge_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `user_badge_ibfk_2` FOREIGN KEY (`id_badge`) REFERENCES `badge` (`id_badge`) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT `user_badge_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `user_badge_ibfk_2` FOREIGN KEY (`id_badge`) REFERENCES `badge` (`id_badge`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `user_course`
 --
 ALTER TABLE `user_course`
-  ADD CONSTRAINT `user_course_ibfk_1` FOREIGN KEY (`id_course`) REFERENCES `course` (`id_course`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `user_course_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `user_course_ibfk_3` FOREIGN KEY (`id_materi`) REFERENCES `materi` (`id_materi`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `user_course_ibfk_4` FOREIGN KEY (`id_level`) REFERENCES `level` (`id_level`) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT `user_course_ibfk_1` FOREIGN KEY (`id_course`) REFERENCES `course` (`id_course`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `user_course_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `user_course_ibfk_3` FOREIGN KEY (`id_materi`) REFERENCES `materi` (`id_materi`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `user_course_ibfk_4` FOREIGN KEY (`id_level`) REFERENCES `level` (`id_level`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

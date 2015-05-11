@@ -23,7 +23,7 @@ pre{display: inline}
 /*section only*/
 #title{background-color: #4AADCD;padding: 20px;margin-top: 17px;color:#fff;}
 #title a,#title h1,#title h2,#title h3{color:#fff;}
-#welcome{padding: 40px;background-color: #000;background-size: cover;}
+#welcome{padding: 20px 0 10px 0;background-color: #000;background-size: cover;}
 #home_header{border-bottom: 4px solid #D5D5D5;width:100%;position:fixed;background-color:#fff;z-index:100;}
 #home_center{padding:40px;}
 .divideroftopmenu{width:100%;height: 40px}
