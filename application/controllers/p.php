@@ -45,6 +45,7 @@ class p extends base { //class for public
 			$this->load->library('form_validation');
 		//set rules
 		$this->form_validation->set_rules('input_username', 'Username', 'required|is_unique[user.username]');//is unique
+		$this->form_validation->set_message('input_username', 'this username is exist, try another one');
 		$this->form_validation->set_rules('input_fullname', 'Fullname', 'required');//is unique
 		$this->form_validation->set_rules('input_email', 'Email', 'required|valid_email|is_unique[user.email]');//is unique
 		$this->form_validation->set_rules('input_password', 'Password', 'required|matches[input_passconf]');//password 1 matched with passconf
@@ -53,6 +54,8 @@ class p extends base { //class for public
 		if ($this->form_validation->run()){//if validation is true
 			//insert to database
 			$now = date('Y-m-d h:i:s');
+			if(!empty($this->session->userdata['registerdata']['oauthProvider'])){$oauthprov=$this->session->userdata['registerdata']['oauthProvider'];}else{$oauthprov='';}
+			if(!empty($this->session->userdata['registerdata']['oauthId'])){$oauthid=$this->session->userdata['registerdata']['oauthId'];}else{$oauthid='';}
 			$datauser = array(
 				'username'=>$_POST['input_username'],
 				'email'=>$_POST['input_email'],
@@ -60,16 +63,17 @@ class p extends base { //class for public
 				'password'=>md5(md5($_POST['input_password'])),//double md5
 				'status'=>'active',
 				'register_date'=>$now,
-				'verified'=>1,
-				'oauthProvider'=>$this->session->userdata['registerdata']['oauthProvider'],
-				'oauthId'=>$this->session->userdata['registerdata']['oauthId'],
+				'verified'=>0,
+				'oauthProvider'=>$oauthprov,
+				'oauthId'=>$oauthid,
 				);
 			//verification code
-			// $verificationCode = base64_encode(base64_encode($datauser['email'])).'linux'.base64_encode(base64_encode($datauser['username']));
-			// $verificationCode = str_replace('=', '', $verificationCode);
+			$verificationCode = base64_encode(base64_encode($datauser['email'])).'linux'.base64_encode(base64_encode($datauser['username']));
+			$verificationCode = str_replace('=', '', $verificationCode);
 			if($this->db->insert('user',$datauser)){
-				//sent verification code to email
-				// $this->m_user-> sendVerificationEmail($verificationCode,$datauser['email']);
+				//send email
+				$body = '<a href="http://www.linuxourse.me/doverification/'.$verificationCode.'">http://www.linuxourse.me/p/doverification/'.$verificationCode.'</a>';
+				$this->sendgridSend($datauser['email'],'Account Verification','To continue learning on Linuxourse click link bellow',$body);
 				$this->session->sess_destroy();
 				redirect(site_url('p/redirect/registersuccess'));
 			}else{//failed insert to db
@@ -77,7 +81,7 @@ class p extends base { //class for public
 					'title'=>'Register Failed',
 					);
 				$this->baseView('p/registererror',$data);
-			}			
+			}
 		} else { //if validation is false
 			$data = array(
 				'title'=>'Register Failed',
@@ -92,14 +96,25 @@ class p extends base { //class for public
 	}
 }
 
-	//sent verfication code to email
-public function sentemail(){
-		//if not do verfication in 7 days, user data will delete
-
-}
 	//do verification
 public function doverification(){
-	$verficationcode = $this->uri->segment(3);
+	$this->load->model('M_user');
+	$verificationcode = $this->uri->segment(3);
+	$vc = explode('linux',$verificationcode);
+	$email = base64_decode(base64_decode($vc[0]));//WORKED
+	$username = base64_decode(base64_decode($vc[1]));//WORKED
+	// is user found
+	$userdata = $this->m_user->checkUser($username,'',$email);
+	if($userdata==TRUE)//user found
+	{
+		$this->db->where('email',$email);
+		$this->db->update('user',array('verified'=>1));
+		echo '<script>window.setTimeout(function(){window.location.href = "'.site_url().'";}, 2);</script>';
+		echo '<h1>Confirmation Success</h1><p>You will be automatic redirect to <a href="'.site_url().'">Linuxourse</a></p>';
+	}else//user not found
+	{
+		echo 'User data not found <a href="'.site_url().'">menuju Linuxourse</a>';
+	}
 }
 	//user login
 public function login(){
@@ -142,16 +157,16 @@ public function login(){
 					$this->db->where('id_user',$this->session->userdata['student_login']['id_user']);
 					$data = array('last_login'=>date('Y-m-d h:i:s'));
 					$this->db->update('user',$data);//update login terakhir
-					redirect(site_url());					
+					redirect(site_url());
 				} else { //jika statusnya banned
 					echo 'gagal memasukan session';
-				}			
-			}				
+				}
+			}
 			}else{ //username n password not matched
 				$data['title'] = 'login failed';
 				$this->baseView('p/loginerror',$data);
 			}
-			
+
 		} else { //if validation is false
 			$data['title'] = 'login failed';
 			$this->baseView('p/loginerror',$data);
@@ -189,14 +204,14 @@ public function login(){
 			);
 			$this->baseView('p/home',$data);
 			break;
-			
+
 			default:
 			echo '404';
 			break;
 		}
 	}
 	//logout
-	public function logout(){		
+	public function logout(){
 		$this->session->sess_destroy();
 		redirect(site_url(),'refresh');
 	}

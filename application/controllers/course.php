@@ -6,8 +6,8 @@ class course extends base { //class for public
 	{
 		parent::__construct();
 		//only for member
-		$this->load->library('user_agent');		
-		
+		$this->load->library('user_agent');
+
 	}
 	/*
 	AJAX ONLY
@@ -54,7 +54,7 @@ class course extends base { //class for public
 		$this->db->where('username',$this->uri->segment(4));
 		$query = $this->db->get('user');
 		$result = $query->row_array();
-		$idstudent = $result['id_user'];		
+		$idstudent = $result['id_user'];
 		//cek is user have started
 		if(!$this->m_course->isStudentStarted($idstudent,$id)){
 			redirect(site_url('course/syllabus/'.$this->uri->segment(3)));//redirect to syllabus view
@@ -118,7 +118,9 @@ class course extends base { //class for public
 		$data['script'] = '<script>$(document).ready($("body").css("background-color","#282828"));</script>';
 		//recent idlevel
 		$data['recentIdlevel'] = $this->m_course->courseListMenu($data['detCourse']['step'],$data['detCourse']['id_level'],$data['detCourse']['id_materi']);
-		$data['courseList']=$this->m_course->courseByLevel($data['recentIdlevel']['id_level']);//show course b y id level
+		if(!empty($data['recentIdLevel']['id_level'])){
+			$data['courseList']=$this->m_course->courseByLevel($data['recentIdlevel']['id_level']);//show course b y id level
+		}
 		//is course completed
 		if(empty($data['recentIdlevel']) && empty($data['courseList'])){
 			//change course status
@@ -205,7 +207,7 @@ class course extends base { //class for public
 					//remove get parameter on url
 					$link = explode('?', $this->agent->referrer());
 					redirect($link[0]);
-				}				
+				}
 			}else{//change to next level
 				// next step not available -> change level
 				$nextlevel = $this->m_course->isNextLevelAvailable($idlevel,$idmateri);
@@ -215,7 +217,7 @@ class course extends base { //class for public
 				if(!empty($nextlevel)){
 					echo 'this materi not completed';
 					$next_idlevel = $nextlevel['id_level'];
-					//get next_idcourse 
+					//get next_idcourse
 					$next_idcourse = $this->m_course->getIdCourseByLevel($nextlevel['id_level']);
 					$next_idcourse = $next_idcourse['id_course'];
 					//count timing**********
@@ -268,7 +270,7 @@ class course extends base { //class for public
 				$querylevel = $querylevel->row_array();
 				$idlevel = $querylevel['id_level'];
 				if(empty($idlevel)){$idlevel=0;}
-				//get the smallest id course 
+				//get the smallest id course
 				$sqlcourse = "SELECT id_course FROM course WHERE id_level = ? ORDER BY step ASC";
 				$querycourse = $this->db->query($sqlcourse,$idlevel);
 				$querycourse = $querycourse->row_array();
@@ -289,7 +291,7 @@ class course extends base { //class for public
 				}else{
 					echo 'failed join course';
 				}
-			}			
+			}
 		}
 	}
 	//get history via up arrow key
@@ -297,7 +299,7 @@ class course extends base { //class for public
 		$command = $_GET['command'];
 
 	}
-	
+
 	//get certificate
 public function certificate(){
 	$uri = $this->uri->segment(3);
@@ -312,7 +314,7 @@ public function certificate(){
 			//get detail course
 		$data = array(
 			'detUserCourse'=>$this->m_course->detUserCourse($iduc),
-			);	
+			);
 	}
 	//couting scores**************
 	$green = 0;
@@ -339,9 +341,9 @@ public function certificate(){
 	}else{
 		$score ='fail';
 	}
-	
+
 	//end of couting scores***************
-	
+
 		//if level not completed or user_course not found
 	if($data['detUserCourse']['status'] != 'completed' || empty($data['detUserCourse'])){
 		redirect(site_url());
@@ -358,7 +360,7 @@ public function certificate(){
 		$this->dompdf->render();
 		$title = 'Linuxourse Certificate '.$data['detUserCourse']['materi'];
 		$this->dompdf->stream($title.".pdf");//pdf file name
-		}		
+		}
 	}
 	//get student completed materi
 	public function studentCompletingMateri(){

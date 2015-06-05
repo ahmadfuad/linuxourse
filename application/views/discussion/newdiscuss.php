@@ -5,13 +5,13 @@
 	}
 </script>
 <section id="title">
-	<center>		
+	<center>
 		<h1 style="margin:0">linuXourse Discussion</h1>
 		<p>have problem, stuck, something not working, join the club and discuss it</p>
 	</center>
 </section>
 <br/>
-<div class="row">	
+<div class="row">
 	<center>
 		<div class="large-10 large-offset-1 columns">
 			<div class="row">
@@ -36,7 +36,7 @@
 	<div class="row">
 		<div class="large-12 columns">
 			<div class="large-12 columns">
-				<strong>order by : </strong><strong><a href="<?php echo site_url('discussion')?>">Lattest</a></strong> | <a href="#">Top Views</a> | <a href="#">Top Comment</a>
+				<strong>order by : </strong><strong><a href="<?php echo site_url('discussion')?>">Lattest</a></strong> | <a href="<?php echo site_url('discussion/orderby/views');?>">Top Views</a> | <a href="#">Top Comment</a>
 				<hr/>
 			</div>
 			<br/><br/>
@@ -93,7 +93,7 @@
 
 </div>
 
-</div>			
+</div>
 
 </div>
 </div>

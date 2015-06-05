@@ -14,6 +14,8 @@ class m_admin extends CI_Model{
 		if($query->num_rows() > 0){
             //memasukkan hasil eksekusi query kedalam row_array
 			return $query->row_array();
+		} else{
+			return array();
 		}
 	}
 	//show user by last login
@@ -35,7 +37,7 @@ class m_admin extends CI_Model{
 		INNER JOIN level ON level.id_level = course.id_level
 		INNER JOIN materi ON materi.id_materi = level.id_materi
 		WHERE course.title LIKE '%".$keyword."%'
-		ORDER BY materi.id_materi ASC,course.step ASC 
+		ORDER BY materi.id_materi ASC,course.step ASC
 		LIMIT ".$offset.",".$limit;
 		$query = $this->db->query($sql);
 		if($query->num_rows()>0){return $query->result_array();}else{return array();}//
@@ -59,19 +61,19 @@ class m_admin extends CI_Model{
 		FROM course
 		INNER JOIN level ON level.id_level = course.id_level
 		INNER JOIN materi ON materi.id_materi = level.id_materi
-		ORDER BY materi.id_materi ASC,course.step ASC 
+		ORDER BY materi.id_materi ASC,course.step ASC
 		LIMIT ".$offset.",".$limit;
 		$query = $this->db->query($sql);
 		if($query->num_rows()>0){return $query->result_array();}else{return array();}
 	}
 	//count show all course
 	public function countShowAllCourse(){
-		return $this->db->count_all('course'); 
+		return $this->db->count_all('course');
 	}
 	//count course by materi
 	public function countCourseByMateri($idmateri){
-		$sql = "SELECT id_course FROM course 
-		INNER JOIN level ON level.id_level = course.id_level 
+		$sql = "SELECT id_course FROM course
+		INNER JOIN level ON level.id_level = course.id_level
 		INNER JOIN materi ON level.id_materi = materi.id_materi WHERE materi.id_materi=?";
 		$query = $this->db->query($sql,$idmateri);
 		return $query->num_rows();
@@ -84,7 +86,7 @@ class m_admin extends CI_Model{
 		INNER JOIN level ON level.id_level = course.id_level
 		INNER JOIN materi ON materi.id_materi = level.id_materi
 		WHERE materi.id_materi = ".$idmateri."
-		ORDER BY materi.id_materi ASC,course.step ASC 
+		ORDER BY materi.id_materi ASC,course.step ASC
 		LIMIT ".$offset.",".$limit;
 		$query = $this->db->query($sql);
 		if($query->num_rows()>0){return $query->result_array();}else{return array();}
@@ -114,7 +116,7 @@ class m_admin extends CI_Model{
 	//show level by materi
 	public function showLevelByMateri($idmateri){
 		$sql = "SELECT level.title AS 'title', level.level AS 'level', level.id_level AS 'id_level', level.description AS 'description',
-		materi.title AS 'materi' FROM level 
+		materi.title AS 'materi' FROM level
 		INNER JOIN materi ON materi.id_materi = level.id_materi
 		WHERE materi.id_materi = ?";
 		$query = $this->db->query($sql,$idmateri);
@@ -127,7 +129,7 @@ class m_admin extends CI_Model{
 	//search materi
 	public function searchLevel($keyword){
 		$sql = "SELECT level.title AS 'title', level.level AS 'level', level.id_level AS 'id_level', level.description AS 'description',
-		materi.title AS 'materi' FROM level 
+		materi.title AS 'materi' FROM level
 		INNER JOIN materi ON materi.id_materi = level.id_materi
 		WHERE level.title LIKE '%".$keyword."%'";
 		$query = $this->db->query($sql);
@@ -178,7 +180,7 @@ public function countStudentByMateri($idmateri,$filter){
 		break;
 		case 'completed':
 		$sql = "SELECT id_user_course FROM user_course WHERE id_materi = ? AND status = 'completed'";
-		break;			
+		break;
 		default:
 		$sql = "SELECT id_user_course FROM user_course WHERE id_materi = ?  ";
 		break;
@@ -194,7 +196,7 @@ public function countStudentByCourse($idcourse,$filter){
 		break;
 		case 'completed':
 		$sql = "SELECT id_user_course FROM user_course WHERE id_course = ? AND status = 'completed'";
-		break;			
+		break;
 		default:
 		$sql = "SELECT id_user_course FROM user_course WHERE id_course = ?  ";
 		break;
@@ -246,7 +248,7 @@ public function countStudentByCourse($idcourse,$filter){
 		$query = $this->db->query($sql);
 		return $query->num_rows();
 	}
-	
+
 	/////////////
 	//MANAGE NEWS
 	/////////////

@@ -1,12 +1,12 @@
 <script src='https://www.google.com/recaptcha/api.js'></script>
 <section id="title">
-	<center>		
+	<center>
 		<h1 style="margin:0">linuXourse Discussion</h1>
 		<p>have problem, stuck, something not working, join the club and discuss it</p>
 	</center>
 </section>
 <br/>
-<div class="row">	
+<div class="row">
 	<center>
 		<div class="large-10 large-offset-1 columns">
 			<div class="row">
@@ -31,7 +31,7 @@
 	<div class="row">
 		<div class="large-12 columns">
 			<div class="large-12 columns">
-				<strong>order by : </strong><a href="<?php echo site_url('discussion')?>">Lattest</a> | <a href="#">Top Views</a> | <a href="#">Top Comment</a>
+				<strong>order by : </strong><a href="<?php echo site_url('discussion')?>">Lattest</a> | <a href="<?php echo site_url('discussion/orderby/views');?>">Top Views</a> | <a href="#">Top Comment</a>
 				<hr/>
 			</div>
 			<br/><br/>
@@ -39,7 +39,7 @@
 				<br/>
 				<!-- new discuss form -->
 				<div class="row">
-					<?php 
+					<?php
 					if(!empty(validation_errors())){
 						echo '
 						<div data-alert class="alert-box alert radius">
@@ -59,7 +59,7 @@
 								<br/>
 								<div class="g-recaptcha" data-sitekey="6LcaGAQTAAAAAKRuyz9v_cGuKD4i-IzCbPIQgGlQ"></div>
 								<br/>
-								<button class="button" type="submit">Create</button><?php if($isedit){echo '<input type="hidden" name="enc_id_discuss" value="'.$enc_id_discuss.'">';echo '<a onclick="return confirm(\'are you sure!\')" class="alert button" href="'.site_url('discussion/deletetopic?id='.$enc_id_discuss).'">delete</a>';}?>
+								<button class="button" type="submit">Save Changes</button><?php if($isedit){echo '<input type="hidden" name="enc_id_discuss" value="'.$enc_id_discuss.'">';echo '<a onclick="return confirm(\'are you sure!\')" class="alert button" href="'.site_url('discussion/deletetopic?id='.$enc_id_discuss).'">delete</a>';}?>
 							</div>
 							<input type="hidden" name="input_type" value="<?php echo $type?>">
 
@@ -77,7 +77,7 @@
 
 	</div>
 
-</div>			
+</div>
 
 </div>
 </div>

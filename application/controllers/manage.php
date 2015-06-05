@@ -17,7 +17,7 @@ class manage extends base { //class for public
 			redirect(site_url('manage/dashboard'));
 		}
 		if(!empty($_POST)){//do login
-		//start login process			
+		//start login process
 		//set rules
 		$this->form_validation->set_rules('input_username', 'Username', 'required|trim|callback_validate_credentials');//is required
 		$this->form_validation->set_rules('input_password', 'Password', 'required|trim');//is required email
@@ -50,7 +50,8 @@ class manage extends base { //class for public
 					$this->db->where('id_user_manage',$userdata['id_user_manage']);
 					$data = array('loginlog'=>$userdata['loginlog'].'|'.date('Y-m-d h:i:s'));
 					$this->db->update('user_manage',$data);//update login terakhir
-					redirect(site_url('manage'));					
+					print_r($this->session->userdata('manage_login'));
+					redirect(site_url('manage'));
 				} else { //jika statusnya banned
 					echo 'gagal memasukan session';
 				}
@@ -58,7 +59,7 @@ class manage extends base { //class for public
 				$data['title'] = 'login failed';
 				$this->baseManageView('manage/login',$data);
 			}
-			
+
 			} else { //if validation is false
 				$data['title'] = 'login failed';
 				$this->baseManageView('manage/login',$data);
@@ -68,8 +69,8 @@ class manage extends base { //class for public
 			$data = array(
 				'title'=>'Manage'
 				);
-			$this->baseManageView('manage/login',$data);	
-		}		
+			$this->baseManageView('manage/login',$data);
+		}
 	}
 //validate login
 //login validation
@@ -101,7 +102,7 @@ class manage extends base { //class for public
 			'totalcompleteintro'=>$this->m_user->stats(1,'completed'),//total student completed in introduce linux
 			'totalgoingshell'=>$this->m_user->stats(2,'incomplete'),//total student ongoing in linux shell
 			'totalcompleteshell'=>$this->m_user->stats(2,'completed'),//total student completed in linux shell
-			);	
+			);
 		$this->baseManageView('manage/dashboard',$data);
 	}
 
@@ -165,11 +166,11 @@ class manage extends base { //class for public
 		}else{//error insert db
 			echo 'error insert database';
 		}
-	}	
+	}
 	//get id materi
 	$idmateri = $this->uri->segment(3);
 	$materi = $this->m_course->detMateri($idmateri);
-	$data = array(		
+	$data = array(
 		'totalstep' =>'',
 		'title' => 'Add Course Case : '.$materi['title'],
 		'script'=>'<script>function addForm(){$("#form-add").toggle("fast");}</script>',
@@ -178,7 +179,7 @@ class manage extends base { //class for public
 		'case'=>$this->m_course->getCourseByMateri($idmateri),
 		);
 	$this->baseManageView('manage/addcourse',$data);
-	
+
 }
 //edit course
 public function editcourse(){
@@ -229,7 +230,7 @@ public function editcourse(){
 			echo 'error insert database';
 		}
 	}
-	$urisegment = $this->uri->segment(3); 
+	$urisegment = $this->uri->segment(3);
 	if(empty($urisegment)){
 			//get lattest edited idcourse
 		$idcourse = $this->m_course->lastEditCourse();
@@ -289,7 +290,7 @@ public function course(){
 					);
 				break;
 				default:
-				
+
 				break;
 			}
 		}else{//default view
@@ -313,7 +314,7 @@ public function course(){
 		$this->pagination->initialize($config);
 		$data['link'] = $this->pagination->create_links();
 		$data['viewMateri'] =$this->m_admin->showAllMateri(10,0);
-		$this->baseManageView('manage/course',$data);		
+		$this->baseManageView('manage/course',$data);
 	}
 }
 //get course by materi
@@ -412,7 +413,7 @@ public function level(){
 		'num_link'=>7,
 		);
 	//suspend pagination
-	$urisegment = $this->uri->segment(3); 
+	$urisegment = $this->uri->segment(3);
 	if(!empty($urisegment)){
 		switch ($urisegment) {
 			case 'search':
@@ -492,7 +493,7 @@ public function deleteLevel(){//delete a level
 public function reviewLevel(){
 	$this->adminOnly();
 	$idmateri = $this->uri->segment(3);
-	$sql = "SELECT level.level, level.title AS 'title',materi.title AS 'materi',level.id_level 
+	$sql = "SELECT level.level, level.title AS 'title',materi.title AS 'materi',level.id_level
 	FROM level INNER JOIN materi ON materi.id_materi = level.id_materi
 	WHERE materi.id_materi = ?
 	ORDER BY materi.id_materi ASC";
@@ -569,7 +570,7 @@ public function materi(){
 	}
 	$data['total'] = $config['total_rows'];
 	$data['link'] = $this->pagination->create_links();
-	$this->baseManageView('manage/materi',$data);	
+	$this->baseManageView('manage/materi',$data);
 }
 //add new materi
 public function addmateri(){
@@ -594,7 +595,7 @@ public function addmateri(){
 		}
 	}else{//form validation not run
 		echo 'data not valid';
-	}		
+	}
 }
 //mater action
 public function materiaction(){
@@ -609,7 +610,7 @@ public function materiaction(){
 				redirect(site_url('manage/materi?error=error remove materi'));
 			}
 			break;
-		case 'edit'://delete 
+		case 'edit'://delete
 			// print_r($_POST);
 		$id = $_POST['id'];
 		$title = $_POST['input_title'];
@@ -673,7 +674,7 @@ public function students(){
 					'link'=> $this->pagination->create_links(),
 					'total'=>$config['total_rows'],
 					);
-				break;				
+				break;
 				default:
 				echo 'Something wrong';
 				break;
@@ -717,7 +718,7 @@ public function studentaction(){
 		break;
 		case 'active':
 		$data = array('status'=>'active');
-		break;		
+		break;
 	}
 	$this->db->update('user',$data);
 	//redirect
@@ -749,7 +750,7 @@ public function discussions(){
 		);
 	//suspend pagination
 	if(!empty($_GET['q'])){
-		//redirect 
+		//redirect
 		$q = $_GET['q'];//get keyword
 		redirect(site_url('manage/discussions/action/search/'.$q));
 	}
@@ -840,7 +841,7 @@ public function comments(){
 		);
 	$urisegment = $this->uri->segment(4);
 	if(!empty($urisegment)){
-		switch ($urisegment){		
+		switch ($urisegment){
 			case 'locked'://show locked comments
 			//resume pagination
 			$config['total_rows'] = $this->m_admin->countAllComment('locked');//count all posted comment
@@ -964,7 +965,7 @@ public function news(){
 		'num_link'=>7,
 		);
 	//suspend pagination
-	$urisegment = $this->uri->segment(4); 
+	$urisegment = $this->uri->segment(4);
 	if(!empty($urisegment)){
 		switch ($urisegment) {
 			case 'draft':
@@ -990,7 +991,7 @@ public function news(){
 					'script'=>'<script>$(document).ready(function(){$("#news").addClass("active");$(".form-add").show()});</script>',
 					'edit'=>$this->m_news->news_item($id),
 					'link'=>'',
-					);					
+					);
 				break;
 				//delete news
 				case 'delete':
@@ -1115,7 +1116,7 @@ public function superuser(){
 			'script'=>'<script>$(document).ready(function(){$("#superuser").addClass("active");$("#'.$this->uri->segment(4).'").addClass("active")});</script>',
 			'link'=>$this->pagination->create_links(),
 			'view'=>$this->m_admin->showSuperUser($config['per_page'],$uri,$this->uri->segment(4)),
-			);	 
+			);
 	}
 }else{
 		//normal view
@@ -1131,10 +1132,10 @@ public function superuser(){
 			'script'=>'<script>$(document).ready(function(){$("#superuser").addClass("active");$("#all").addClass("active")});</script>',
 			'link'=>$this->pagination->create_links(),
 			'view'=>$this->m_admin->showSuperUser($config['per_page'],$uri,'all'),
-			);	  
+			);
 	}
 	$this->baseManageView('manage/superuser',$data);
-	
+
 }
 //add user manage
 public function addusermanage(){
@@ -1191,7 +1192,7 @@ public function getDirectory(){
 	}
 	$dir = explode('/', $dir);
 	// print_r($dir);
-	if($md['directory'] != $directory && !in_array($dir[1], $showdir)){	
+	if($md['directory'] != $directory && !in_array($dir[1], $showdir)){
 		echo '
 		<div class="row">
 			<div class="small-1 columns"><span style="font-size:20px" class="fi-folder"></span></div>
@@ -1292,10 +1293,10 @@ public function crudStorage(){
 		$this->db->where('directory',$olddir);
 		return $this->db->update('available_dir',array('directory'=>$newdir));
 		break;
-		case 'deletefile':		
+		case 'deletefile':
 		$id = $_GET['id'];
 		$this->db->where('id_ls_dir',$id);
-		return $this->db->delete('ls_dir');	
+		return $this->db->delete('ls_dir');
 		break;
 		case 'deletedir':
 		$name = $_GET['dir'];
