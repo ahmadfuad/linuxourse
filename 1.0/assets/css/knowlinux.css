@@ -9,7 +9,19 @@ body{font-size:12px;font-family: oxygen}
 ul.menu{list-style: none;line-height: 1.2}
 pre{display: inline}
 /*home only*/
-
+.home-navbar{font-size:2em;width:100%;padding: 10px 0;height: initial;position: fixed;background-color: transparent;color:#fff;z-index:200;}
+.no-background{background-color: transparent;}
+.home-cover{background-color: gray;color:#FFF;}
+.home-cover h1{font-size: 6.5em}
+.home-cover h1,h2{font-family:oxygen;color:#fff;margin:0;}
+.super-center{text-align: center;vertical-align: middle}
+.button-transparent{border:2.5px solid #fff;background-color: transparent;font-weight:bold}
+.button-transparent:hover{color:#333;background-color: #FFF;}
+.button-cover{width:300px;}
+.button-circle-home{border-radius: 100px;padding: 0 18px;font-size: 80px;}
+#home-quote{height: initial}
+#home-quote h2,#home-quote p{color:gray;}
+.home-quote-item{padding:40px 10px;float:left;}
 #progressanimate{display:none;}
 .activemenu{border-bottom: 2px solid #008cba;}
 .logo{margin-top:5px;width:155px;height:40px;background-color:#000;background-image: url('img/logo.png');background-size: cover}
