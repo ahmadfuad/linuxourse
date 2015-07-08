@@ -2,9 +2,14 @@
 <html>
 <head>
 	<title>Linuxourse</title>
-	<link rel="stylesheet" type="text/css" href="../1.0/assets/css/foundation.css" media="screen">
-	<link rel="stylesheet" type="text/css" href="../1.0/assets/css/foundation-icons.css" media="screen">
-	<link rel="stylesheet" type="text/css" href="../1.0/assets/css/knowlinux.css" media="screen">
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/foundation.css');?>" media="screen">
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/foundation-icons.css');?>" media="screen">
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/normalize.css')?>" media="screen">
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/knowlinux.css')?>">
+	<link rel="icon" href="<?php echo base_url('assets/img/linuxourse-logo-black.png')?>">
+	<script type="text/javascript" src="<?php echo base_url('assets/js/linuxourse.js')?>"></script>
+	<script type="text/javascript" src="<?php echo base_url('assets/js/vendor/modernizr.js')?>"></script>
+	<script src="<?php echo base_url('assets/js/vendor/jquery.js')?>"></script>
 </head>
 <body>
 <!-- navbar -->
@@ -20,20 +25,33 @@
   <section class="top-bar-section">
     <!-- Right Nav Section -->
     <ul class="right">
-      <li><a href="#">Login</a></li>
+      <li><a href="<?php echo base_url('p/login');?>"><span class="fi-key"></span> Login</a></li>
     </ul>
 
     <!-- Left Nav Section -->
-    <ul class="left">
+    <ul class="left show-for-large-up">
       <li><a href="#">About</a></li>
       <li class="has-dropdown">
         <a href="#">Navigation</a>
         <ul class="dropdown">
-          <li><a href="#">Discussion</a></li>
+          <li><a href="<?php echo base_url('discussion/all'); ?>">Discussion</a></li>
           <li><a href="#">Material</a></li>
-          <li><a href="#">News</a></li>
-          <li><a href="#">Help</a></li>
-      <li><a href="#">Contact</a></li>
+          <li><a href="<?php echo base_url('news')?>">News</a></li>
+          <li><a href="http://linuxourse.me/news/read/TWc9PQ/Help">Help</a></li>
+          <li><a href="https://linuxourse.me/news/read/TVE9PQ/About">About</a></li>
+        </ul>
+      </li>
+    </ul>
+     <ul class="left hide-for-large-up">
+      <li><a href="#">About</a></li>
+      <li class="has-dropdown">
+        <a href="#">Navigation</a>
+        <ul class="dropdown">
+          <li><a href="<?php echo base_url('discussion/all'); ?>">Discussion</a></li>
+          <li><a href="#">Material</a></li>
+          <li><a href="<?php echo base_url('news')?>">News</a></li>
+          <li><a href="http://linuxourse.me/news/read/TWc9PQ/Help">Help</a></li>
+          <li><a href="https://linuxourse.me/news/read/TVE9PQ/About">About</a></li>
         </ul>
       </li>
     </ul>
@@ -41,7 +59,7 @@
 </nav>
 <!-- end of navbar -->
 <!-- cover -->
-<div style="background-size:cover;background-image: url('cover-blur.png')" class="home-cover">
+<div style="background-size:cover;background-image: url('<?php echo base_url('assets/img/cover-blur.png');?>')" class="home-cover">
 <nav style="display:block;height:30%"></nav>
 	<div class="row">
 		<center>
@@ -49,37 +67,41 @@
 		<h2>Learning Linux Without Install Linux</h2>
 		<h1>Linuxourse</h1>
 		<p>For Free. For Everyone. Forever</p>
-		<a style="border:2px solid #008CBA;font-weight:bold" href="#" class="button button-cover">Getting Start</a><br/>
-		<a href="#" class="button button-transparent button-cover">About</a>
+		<a style="border:2px solid #008CBA;font-weight:bold" href="<?php echo site_url('/p/register');?>" class="button button-cover">Getting Start</a><br/>
+		<a href="http://linuxourse.me/news/read/TVE9PQ/About" class="button button-transparent button-cover">About</a>
 		</span>
 		</center>
 	</div>
 </div>
 <!-- end of cover -->
 <!-- materi -->
-<section id="otherCourse" class="small-12 columns">
+<section id="otherCourse">
 	<div class="row">
 	<center>
 		<h2>What Will You Learn</h2>
 		<br/><br/>
-		<div class="small-4 columns">
+		<div class="small-3 columns">
 			<a href="#" class="button button-transparent button-circle-home"><span class="fi-anchor"></a>
 			<p>Linux Introduction</p>
 		</div>
-		<div class="medium-4 columns">
+		<div class="medium-3 columns">
 			<a href="#" class="button button-transparent button-circle-home"><span class="fi-lock"></a>
 			<p>Linux Shell and Command</p>
 		</div>
-		<div class="medium-4 columns">
+		<div class="medium-3 columns">
 			<a href="#" class="button button-transparent button-circle-home"><span class="fi-torsos"></a>
 			<p>Learning Linux Together</p>
+		</div>
+		<div class="medium-3 columns">
+			<a href="#" class="button button-transparent button-circle-home"><span class="fi-plus"></a>
+			<p>create your own linux test</p>
 		</div>
 	</center>
 	</span>
 </section>
 <section id="home-quote">
 	<div class="row">
-	<div class="medium-12 columns">
+	<div style="padding-top:50px;padding-bottom:25px" class="medium-12 columns">
 		<div class="home-quote-item medium-6 columns">
 		<center><br/><span style="font-size:20em" class="fi-comment-quotes"></span></center>
 		</div>
@@ -93,7 +115,7 @@
 			</p>
 		</div>
 	</div>
-	<div class="medium-12 columns">
+	<div style="padding-top:50px;padding-bottom:25px" class="medium-12 columns">
 		<div style="float:left;text-align:right;" class="home-quote-item medium-6 columns">
 			<h2 style="margin-top:35px">Why Using Linuxourse</h2>
 			<br/>
@@ -103,7 +125,7 @@
 			</p>
 		</div>
 		<div style="float:left" class="home-quote-item medium-6 columns">
-			<center><img width="100%" src="mockup.png"></center>
+			<center><img width="100%" src="<?php echo base_url('assets/img/mockup.png');?>"></center>
 		</div>
 	</div>
 	</div>
@@ -134,16 +156,13 @@
 	</section>
 <!-- end of stats -->
 <!-- javascript -->
-<script src="../1.0/assets/js/vendor/jquery.js"></script>
-<script src="../1.0/assets/js/foundation.min.js"></script>
-<script src="../1.0/assets/js/linuxourse.js"></script>
 <script>
 	$(document).foundation();
 </script>
 <script type="text/javascript">
 	$(document).ready(function()
 		{
-			var height = $(document).height()-$('#home_user').height() - $('#home_quote').height() - $('#otherCourse').height()-500;
+			var height = $(document).height()-$('#home_user').height() - $('#home_quote').height() - $('#otherCourse').height() - $('#footer').height() - 600;
 			$('.home-cover').css('height',height);
 			//navbar style
 			$("#navbar").mouseenter(function(){whiteDiv();});
@@ -165,6 +184,6 @@
 	{
 		 $("#navbar").css({'background-color':'transparent'});
 	}
-	</script>
+</script>
 </body>
 </html>

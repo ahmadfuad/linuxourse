@@ -33,8 +33,8 @@
 		<div class="large-5 columns">
 		<h4>Or Login Via</h4>
 		<hr/>
-		<!-- <a style="background-color:rgb(77, 117, 202);display:block" href="#" class="button"><i style="font-size:20px;vertical-align:middle" class="fi-social-facebook"></i> Facebook</a> -->
-		<a style="background-color:rgb(202, 77, 77);display:block" href="<?php echo site_url('oauth/googleplus')?>" class="button"><i style="font-size:20px;vertical-align:middle" class="fi-social-google-plus"></i> Google+</a>
+		<a style="background-color:rgb(77, 117, 202);display:block" href="http://linuxourse.me/oauth/facebook/facebook.php" class="button"><i style="font-size:20px;vertical-align:middle" class="fi-social-facebook"></i> Facebook</a>
+		<a style="background-color:rgb(202, 77, 77);display:block" href="http://linuxourse.me/oauth/googleplus" class="button"><i style="font-size:20px;vertical-align:middle" class="fi-social-google-plus"></i> Google+</a>
 		</div>
 	</div>
 </div>

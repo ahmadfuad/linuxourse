@@ -32,7 +32,9 @@ class p extends base { //class for public
 		}else {
 			$data['script'] = '<script>$(document).ready(function(){$("#home").addClass("activemenu")});</script>';
 		}
-		$this->baseView('p/home',$data);
+		$this->load->view('home-inaicta');
+		$this->load->view('base/baseFooter');
+		// $this->baseView('p/home',$data);
 	}
 
 	/////////////////////////////////////

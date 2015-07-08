@@ -37,14 +37,13 @@ class m extends base { //class for public
 			break;
 
 			default:
-								# code...
+				# code...
 			break;
 			}
 		}
 		$data = array(
 			'title'=>'Student Dashboard',
 			'recentCourse'=>$this->m_course->recentCourseByUser($idStudent),
-			'userCourse'=>$this->m_course->courseByUser($idStudent),
 			'myMateri'=>$this->m_course->showMyIdMateri($this->session->userdata['student_login']['id_user']),
 			'allMateri'=>$this->m_course->showAllMateri(),
 			);
@@ -134,6 +133,31 @@ class m extends base { //class for public
 			$data['profile'] = $this->session->userdata['student_login'];
 			$this->baseView('m/editprofile',$data);
 		}
+	}
+
+	//manage my test
+	public function mytest()
+	{
+		$uri = $this->uri->segment(3);
+		if(!empty($uri))return $this->managetest();
+		$this->load->model('m_test');
+		$iduser = $this->session->userdata['student_login']['id_user'];
+		$data = array(
+			'title'=>'My Test',
+			'totalopentest'=>$this->m_test->myTest($iduser,'open')->num_rows(),
+			'totalclosedtest'=>$this->m_test->myTest($iduser,'clossed')->num_rows()
+			);
+		$this->baseView('m/mytest',$data);
+	}
+
+	//manage my test
+	public function managetest()
+	{
+		$idtest = $this->uri->segment(4);
+		$data = array(
+			'title'=>'Manage Test',
+			);
+		$this->baseView('m/managetest',$data);
 	}
 
 	//logout

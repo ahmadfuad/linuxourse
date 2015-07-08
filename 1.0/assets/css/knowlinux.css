@@ -21,7 +21,7 @@ pre{display: inline}
 .button-circle-home{border-radius: 100px;padding: 0 18px;font-size: 80px;}
 #home-quote{height: initial}
 #home-quote h2,#home-quote p{color:gray;}
-.home-quote-item{padding:40px 10px;float:left;}
+.home-quote-item{padding:40px1 0px;float:left;}
 #progressanimate{display:none;}
 .activemenu{border-bottom: 2px solid #008cba;}
 .logo{margin-top:5px;width:155px;height:40px;background-color:#000;background-image: url('img/logo.png');background-size: cover}
