@@ -6,7 +6,8 @@ class CourseAPI extends base { //class for public
 	{
 		parent::__construct();
 		//only for member
-		$this->load->library('user_agent');				
+		$this->load->library('user_agent');	
+		$this->load->model('m_test');			
 	}
 	//get courselist
 	public function getCourse()
@@ -97,7 +98,7 @@ class CourseAPI extends base { //class for public
 		//GET MY TEST
 		public function getMyTest()
 		{
-			$this->load->model('m_test');
+			
 			$results = array();
 			$data = file_get_contents("php://input");
 	        $data = json_decode($data);
@@ -110,12 +111,11 @@ class CourseAPI extends base { //class for public
 		//TEST DETAIL
 		public function detailTest()
 		{
-			$this->load->model('m_test');
+			
 			$data = file_get_contents("php://input");
 	        $data = json_decode($data);
 	        $idtest = $data->idtest;
-	        $this->db->where('idTest',$idtest);
-	        $result = $this->db->get('test')->row_array();
+	        $result = $this->m_test->detailTest($idtest);
 	        echo json_encode($result);
 		}
 		//STEP DETAIL
@@ -133,7 +133,7 @@ class CourseAPI extends base { //class for public
 		//NEW STEP ACTION
 		public function newStepTest()
 		{
-			$this->load->model('m_test');
+			
 			$data = file_get_contents("php://input");
 	        $data = json_decode($data,true);
 	        $idtest = $data['idtest'];
@@ -146,7 +146,7 @@ class CourseAPI extends base { //class for public
 		//TEST CASE LIST
 		public function getCase()
 		{
-			$this->load->model('m_test');
+			
 			$data = file_get_contents("php://input");
 	        $data = json_decode($data);
 	        $idtest = $data->idtest;
@@ -193,7 +193,7 @@ class CourseAPI extends base { //class for public
 		//CHECK TEST STEP BY ID TEST
 		public function checkStep()
 		{
-			$this->load->model('m_test');
+			
 			$data = file_get_contents("php://input");
 	        $data = json_decode($data);
 	        $idtest = $data->idtest;
@@ -203,5 +203,54 @@ class CourseAPI extends base { //class for public
 	        $query = $this->db->get('testCase');
 	        if($query->num_rows()>0){echo 'true';}//step is exist
 	        else{echo 'false';}//step ready to use
+		}
+
+		/*****************************************/
+		//REGEX
+		/*****************************************/
+		public function saveStep()
+		{
+			$data = file_get_contents("php://input");
+	        $data = json_decode($data);
+	        $commands = $data->commands;
+	        $iduser = $this->session->userdata['student_login']['id_user'];
+	        $idtest = $data->idtest;
+	        $step = $data->step;
+	        $iddotest = $iduser.'-'.$idtest;
+	        //get step detail
+	        $casedetail = $this->m_test->getCase($idtest,$step)->row_array();
+	        $casecommand = trim($casedetail['command']);
+	        $casecommand = explode(':',$casecommand);//case commands as array
+	        $totalcasecommand = count($casecommand);//total case commands
+	        $totalcorrectanswer = 0;
+	        //get real commands
+	        preg_match_all('#\$(.*):#Us', $commands,$purecommands,PREG_SET_ORDER);
+	        //get total correct answer
+	        foreach($purecommands as $pc):
+	        	$command = trim(strip_tags($pc[1]));
+	        	if(in_array($command,$casecommand)):
+	        		$totalcorrectanswer = $totalcorrectanswer + 1;
+	        	endif;
+	        endforeach;
+	        // echo $totalcorrectanswer;
+	        //answer presentation
+	        $presentationcorrect = ($totalcorrectanswer*100) / $totalcasecommand;
+	        //database session modification
+	        $databasesession = $this->m_test->getDatabaseSession($iduser,$idtest);
+	        $resultdata = $databasesession['doTestResult'];
+	        //update result data
+	        $this->updateDoTestResult($iddotest,$resultdata,$step,$presentationcorrect,0);//[WORKED]
+		}
+		//update do test result data
+		public function updateDoTestResult($iddotest,$resultdata,$step,$presentationcorrect,$totaltime)
+		{
+			$resultupdate = array();
+			$resultdata = json_decode($resultdata,true);
+			$resultdata[$step]['correct'] = $presentationcorrect;
+			$resultdata[$step]['time'] = $totaltime;
+			$resultupdatejson = json_encode($resultdata);
+			//update database
+			$this->db->where('idDotest',$iddotest);
+			return $this->db->update('doTest',array('doTestResult'=>$resultupdatejson));
 		}
 	}

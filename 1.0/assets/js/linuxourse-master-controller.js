@@ -1,4 +1,4 @@
-var app = angular.module('appLinuxourse',[]);
+var app = angular.module('appLinuxourse',['ngSanitize']);
 
 //DASHBOARD CONTROLLER
 app.controller('ctrlDashboard', ['$scope','$http','$timeout','$location',
@@ -236,3 +236,117 @@ app.controller('ctrlManageTest', ['$scope','$http','$timeout','$location',
 		$scope.detailTest();
 		$scope.getCase();
 	}]);
+
+//TEST TERMINAL CONTROLLER
+app.controller('ctrlTestTerminal', ['$scope','$http','$timeout','$location',
+	function($scope,$http,$timeout,$location){
+		//get detail test
+		$scope.detailTest = function()
+		{
+			$scope.loaderbox=false;
+			$scope.loadertext = 'loading test detail';
+			var url = rooturl+'CourseAPI/detailTest';
+			var ajax = $http.post(url,{idtest:idtest});
+			ajax.success(function(response){$scope.loaderbox=true;$scope.test=response});
+			ajax.error(function(){alert('Error load test data');});
+		};
+		//get all case
+		$scope.getCase = function()
+		{
+			$scope.loaderbox=false;
+			$scope.loadertext = 'loading case list';
+			var url = rooturl+'CourseAPI/getCase';
+			var ajax = $http.post(url,{idtest:idtest});
+			ajax.success(
+				function(response){
+					$scope.loaderbox=true;
+					console.log(response);$scope.cases=response;$scope.$apply;
+				});//get all case list to be model on ng-repeat
+			ajax.error(function(){alert('Error load case list');});
+		}
+		//get detail case
+		$scope.detailCase = function(step)
+		{
+			$scope.loaderbox=false;
+			$scope.loadertext = 'loading case data';
+			var url = rooturl+'CourseAPI/detailStep';
+			var ajax = $http.post(url,{idtest:idtest,step:step});
+			ajax.success(function(response){
+				$scope.loaderbox=true;
+				$scope.case = response;
+				$scope.case.testCaseStep = parseInt(response.testCaseStep);
+				$scope.case.estimate = parseInt(response.estimate);
+				$scope.command.results='';
+				$scope.$apply;
+			});
+			ajax.error(function(){
+				alert('Error load case');
+			});
+		};
+		//clear terminal
+		$scope.clearTerminal = function()
+		{
+			$scope.command.results='';
+			$scope.$apply;
+		}
+		//save step
+		$scope.saveStep = function(step)
+		{
+			$scope.loaderbox=false;
+			$scope.loadertext = 'saving data...';
+			if(angular.isUndefined($scope.command.results))
+			{
+				$scope.loaderbox=true;
+				alert('Error save step\n please execute something');
+			}else
+			{
+				var commands = $scope.command.results;
+				var url = rooturl+'CourseAPI/saveStep';
+				var ajax = $http.post(url,{idtest:idtest,commands:commands,step:step});
+				ajax.success(function(){
+					$scope.loaderbox=true;
+					alert('Step number '+step+' is saved\ncomplete the other steps');
+				});
+				ajax.error(function(){
+					alert('Error save step\n please refresh page');
+				});
+			}			
+		}
+		//save test
+		$scope.saveTest = function()
+		{
+
+		};
+		//LINUX COMMAND
+		//execute command
+		$scope.execute = function()
+		{
+			$scope.loaderbox=false;
+			$scope.loadertext = 'executing...';
+			var url = rooturl+'regex/execcommand';//command execution command
+			//ajax start
+			var ajax = $http.post(url,{command:$scope.command.input});
+			// alert($scope.command.input);
+			ajax.success(function(response){if(!$scope.command.results){$scope.command.results=''};$scope.command.input='';$scope.command.results = $scope.command.results+response;$scope.$apply;$scope.loaderbox=true;});
+			ajax.error(function(response){$scope.loaderbox=true;alert('Error executing command');});
+
+		}
+		//autorun
+		$scope.detailTest();
+		$scope.getCase();
+		$scope.detailCase(firststep);
+	}]);
+
+//DIRECTIVE
+app.directive('ngEnter', function () {
+    return function (scope, element, attrs) {
+        element.bind("keydown keypress", function (event) {
+            if(event.which === 13) {
+                scope.$apply(function (){
+                    scope.$eval(attrs.ngEnter);
+                });
+                event.preventDefault();
+            }
+        });
+    };
+});

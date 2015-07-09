@@ -71,7 +71,7 @@
 </script>
 <script src="<?php echo base_url('assets/js/foundation.min.js')?>"></script>
 <script>
-	$(document).foundation();
+	$(document).foundation().foundation('joyride', 'start');;
 </script>
 <!--<script src="<?php echo base_url('assets/js/vendor/fastclick.js')?>"></script>-->
 <!-- Histats.com  START (hidden counter)-->

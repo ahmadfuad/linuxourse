@@ -64,10 +64,13 @@ class m_command extends CI_Model{
 				endforeach;
 				//print directory from session
 				if($directory == '/home/user'):
-					$sessiondir = $this->session->userdata('mydir');
-				foreach($sessiondir as $sd):
-					echo '<span class="terminal-showdir">'.$sd['name'].'/</span> ';
-				endforeach;
+				
+				$sessiondir = $this->session->userdata('mydir');
+					if(!empty($sessiondir)):
+						foreach($sessiondir as $sd):
+							echo '<span class="terminal-showdir">'.$sd['name'].'/</span> ';
+						endforeach;
+					endif;
 				endif;
 				//print file
 				foreach($lsfile as $lf):
@@ -76,9 +79,11 @@ class m_command extends CI_Model{
 				//if active directory is /home/user, show file on session
 				if($directory == '/home/user'):
 					$sessionfile = $this->session->userdata('myfile');
-				foreach($sessionfile as $sf):
-					echo $sf['name'].' ';
-				endforeach;
+					if(!empty($sessionfile)):
+						foreach($sessionfile as $sf):
+							echo $sf['name'].' ';
+						endforeach;
+					endif;
 				endif;
 				//end if
 				echo '</pre>';
@@ -125,9 +130,11 @@ class m_command extends CI_Model{
 						//if active directory is /home/user, show file on session
 						if($directory == '/home/user'):
 							$sessionfile = $this->session->userdata('myfile');
-						foreach($sessionfile as $sf):
-							echo '<br/>'.$sf['type'].$sf['permissions'].':0 '.$sf['owner'].' '.$sf['owner'].' 7000 '.$sf['create'].' '.$sf['name'].' ';
-						endforeach;
+							if(!empty($sessionfile)):
+							foreach($sessionfile as $sf):
+								echo '<br/>'.$sf['type'].$sf['permissions'].':0 '.$sf['owner'].' '.$sf['owner'].' 7000 '.$sf['create'].' '.$sf['name'].' ';
+							endforeach;
+							endif;
 						endif;
 						//end if
 						echo '</pre>';

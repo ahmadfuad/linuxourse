@@ -36,7 +36,7 @@
 								<p>
 									<a style="margin-right:15px" href="#newstep" ng-click="newStepModal()">+ New Step</a> 
 									<a style="margin-right:15px" href="#refresh" ng-click="getCase()"><span class="fi-refresh"></span> Refresh List</a> 
-									<a style="margin-right:15px" href="#">Test Preview</a>
+									<a target="_blank" style="margin-right:15px" href="<?php echo site_url('test/preview');?>/{{test.idTest}}">Test Preview</a>
 									<a onclick="return prompt('Copy this link and share to participant','http://linuxourse.me/test/join/')" style="margin-right:15px" href="#getlink">Get Link</a>
 								</p>
 								<small>click to update/delete step</small>		

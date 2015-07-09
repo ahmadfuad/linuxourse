@@ -17,7 +17,13 @@ class regex extends base { //class for public
 	}
 
 	public function execcommand(){
-		$command = $_POST['command'];
+		$data = file_get_contents("php://input");
+        if(!empty($data)):
+            $data = json_decode($data);
+            $command = $data->command;
+        else:
+            $command = $_POST['command'];
+        endif;
         //remove new line with regex
 		$commandclear = preg_replace('/[\n]/', '',$command);
         //history setup
@@ -291,7 +297,7 @@ class regex extends base { //class for public
                     }
                 }
             }
-    //touch : create new empty file [WORK]
+            //touch : create new empty file [WORK]
             public function touch(){
             	$command = $_GET['command'];
             	$commandarray = explode(' ',$command);

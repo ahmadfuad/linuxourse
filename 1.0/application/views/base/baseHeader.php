@@ -16,6 +16,7 @@
 		var rooturl = '<?php echo site_url();?>';
 	</script>
 	<script type="text/javascript" src="<?php echo base_url('assets/js/angular/angular.min.js');?>"></script>
+	<script type="text/javascript" src="<?php echo base_url('assets/js/angular/angular-sanitize.js');?>"></script>
 	<script type="text/javascript" src="<?php echo base_url('assets/js/linuxourse-master-controller.js')?>"></script>
 	<?php
 	//custom js setup
