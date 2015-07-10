@@ -127,7 +127,11 @@
 								          <label for="notes" class="right inline">Notes To Participant</label>
 								        </div>
 								        <div class="small-9 columns">
-								          <textarea type="text" id="notes" row="4" ng-model="new.testNotes" required></textarea>
+								        	<div data-alert class="alert-box info">
+											  Will show to participant before start a test.
+											  <a href="#" class="close">&times;</a>
+											</div>
+								          <textarea style="min-height:200px" type="text" id="notes" row="4" ng-model="new.testNotes" required></textarea>
 								        </div>
 								      </div>
 								      <br/>
@@ -136,7 +140,15 @@
 								          <label for="organization" class="right inline">Organization</label>
 								        </div>
 								        <div class="small-9 columns">
-								          <input type="text" id="organization"  ng-model="new.Organization">
+								          <input type="text" id="organization"  ng-model="new.organization">
+								        </div>
+								      </div>
+								      <div class="row">
+								        <div class="small-2 columns">
+								          <label for="testemail" class="right inline">Email Contact</label>
+								        </div>
+								        <div class="small-9 columns">
+								          <input type="email" id="testemail"  ng-model="new.testEmail">
 								        </div>
 								      </div>
 								      <div class="row">
@@ -144,6 +156,10 @@
 								          <label for="unique" class="right inline">Unique Name</label>
 								        </div>
 								        <div class="small-9 columns">
+								        	<div data-alert class="alert-box info">
+											   Make unik test link like "my-test" without space.
+											  <a href="#" class="close">&times;</a>
+											</div>
 								          <input ng-keyup="checkUniqueLink()" type="text" id="unique" ng-model="new.testUniqueLink" placeholder="input custom unique name without space">
 									        <small ng-hide="alertUniqueBox" class="error">{{alertUniqueText}}</small>
 								        </div>
@@ -169,12 +185,17 @@
 								          <label for="type" class="right inline">Test Type</label>
 								        </div>
 								        <div class="small-9 columns">
-								         	<select id="type" ng-model="new.testType" required>
+								        	<div data-alert class="alert-box info">
+											   More options available soon.
+											  <a href="#" class="close">&times;</a>
+											</div>
+								         	<select id="type" ng-model="new.testType='private'" required>
 								         		<option value="public">Public</option>
 								         		<option value="private">Private</option>
 								         	</select>
 								        </div>
 								      </div>
+								      <br/>
 								      <div class="row">
 								        <div class="small-2 columns">
 								          <p></p>

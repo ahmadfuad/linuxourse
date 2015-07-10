@@ -8,7 +8,8 @@ if($diff->i != 0 ){$i=$diff->i.' minutes ';}else{$i='';}
 if($diff->s != 0 ){$s=$diff->s.' seconds ';}else{$s='';}
 $time = $h.$i.$s;
 ?>
-<div style="background-color:#F4F4F4" class="large-12 columns">
+<style type="text/css">body{background-color:#F4F4F4}</style>
+<section class="row">
 	<br/>
 	<div style="padding:50px 0" class="small-6 small-offset-3 columns">
 		<div style="padding:20px;background-color:#fff">
@@ -28,4 +29,4 @@ $time = $h.$i.$s;
 		</center>
 		</div>
 	</div>
-</div>
+</section>

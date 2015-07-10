@@ -162,7 +162,7 @@
 <script type="text/javascript">
 	$(document).ready(function()
 		{
-			var height = $(document).height()-$('#home_user').height() - $('#home_quote').height() - $('#otherCourse').height() - $('#footer').height() - 600;
+			var height = $(document).height()-$('#home_user').height() - $('#home_quote').height() - $('#otherCourse').height() - $('#footer').height() - 550;
 			$('.home-cover').css('height',height);
 			//navbar style
 			$("#navbar").mouseenter(function(){whiteDiv();});

@@ -39,6 +39,9 @@ class test extends base { //class for public
 		//is owner
 		$idtest = $this->uri->segment(3);
 		$iduser = $this->session->userdata['student_login']['id_user'];
+		$finishingtest = $this->m_test->finishingTest($idtest,$iduser);
+		if($finishingtest)redirect(site_url('test/close/'.$idtest));//only 1 time to join test
+		$test = $this->m_test->detailTest($idtest);//get test detail
 		$mytest = $this->m_test->isMyTest($iduser,$idtest);		
 		$case = $this->m_test->getCase($idtest);
 		$data = array

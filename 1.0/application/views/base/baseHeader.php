@@ -44,7 +44,7 @@
 		<a class="close-reveal-modal">&#215;</a>
 	</div>
 	<!-- header -->
-	<section  id="home_header">
+	<section ng-controller="ctrlHeader"  id="home_header">
 		<div style="min-width:100%" class="row header">
 			<div class="small-12 large-10 large-push-1 columns">
 				<div class="small-3 columns">
@@ -64,8 +64,14 @@
 								$src = base_url('assets/img/avatar.png');
 							}
 							?>
-							<li><a href="#" data-dropdown="drop1" aria-controls="drop1" aria-expanded="false" class="secondary dropdown has-dropdown not-click"><img style="width:30px;border-radius:30px" src="<?php echo $src?>"/></a>
-								<ul id="drop1" data-dropdown-content class="dropdownme f-dropdown" aria-hidden="true" tabindex="-1">
+							<li><a href="#notification" style="margin-top: 4px;" data-dropdown="notification-list" aria-controls="notification-list" aria-expanded="false" class="secondary dropdown has-dropdown not-click"><span class="notification">{{totalNotification}}</span></a>
+								<ul id="notification-list" data-dropdown-content class="dropdownme f-dropdown" aria-hidden="true" tabindex="-1">
+									<li><a ng-click="showInvitation()" href="#invite">Test Invivation ({{totalInviteNotification}})</a></li>
+									<li><a ng-click="showMessage()" href="#invite">Message (0)</a></li>
+								</ul>
+							</li>
+							<li><a href="#menu" data-dropdown="menu-list" aria-controls="menu-list" aria-expanded="false" class="secondary dropdown has-dropdown not-click"><img style="width:30px;border-radius:30px" src="<?php echo $src?>"/></a>
+								<ul id="menu-list" data-dropdown-content class="dropdownme f-dropdown" aria-hidden="true" tabindex="-1">
 									<li><a href="<?php echo site_url('student/v/'.$this->session->userdata['student_login']['username']);?>"><strong><?php echo $this->session->userdata['student_login']['username'];?></strong><br/><small>My Profile Page</small></a></li>
 									<li><a href="<?php echo site_url('m/test/new')?>"><span class="fi-grid"></span>  Dashboard</a></li>
 									<li><a href="<?php echo site_url('m/mytest')?>"><span class="fi-grid"></span>  My Test</a></li>
@@ -81,5 +87,24 @@
 					</div>
 				</div>
 			</div>
+		<!-- modal for header menu -->
+		<div id="modalheader" class="reveal-modal small" data-reveal>
+			<h4 style="color:#000">{{modaltitle}} <small>{{modalloader}}</small></h4>
+			<hr/>
+			<div style="max-height:400px">
+				<!-- for invitation -->
+				<span ng-hide="invitationbox">
+				<dl ng-repeat="invitation in invitations" id="invite-{{invitation.idTest}}">
+				  <dt>from Fossil <span style="float:right"><a ng-click="startTest()" class="label sucess" href="#starttest">start</a> <a ng-click="closeTest()" class="label alert" href="#exittest">x</a></span></dt>
+				  <dd><strong>start</strong> 2015-05-23. <strong>end</strong> 2015-05-23.</dd>
+				</dl id="2">
+				</span>
+				<!-- for message -->
+				<span ng-hide="messagebox">
+				<p>message box</p>
+				</span>
+				<a class="close-reveal-modal">&#215;</a>
+			</div>
+		</div>
 		</section>
 		<section class="divideroftopmenu"></section>

@@ -12,9 +12,9 @@
 		<div class="detail">
 			<?php 
 			if($v['type']=='ask'){
-				echo '<a class="linktaggreen" href="'.site_url('discussion/all?type=ask').'">ask?</a>';
+				echo '<a class="success label" href="'.site_url('discussion/all?type=ask').'">ask?</a>';
 			}else{
-				echo '<a class="linktagblue" href="'.site_url('discussion/all?type=thread').'">thread</a>';
+				echo '<a class="secondary label" href="'.site_url('discussion/all?type=thread').'">thread</a>';
 			}
 			?>					
 			<span class="fi-eye"></span> <?php echo $v['views'];?> <span class="fi-comment"></span> <?php echo $this->m_discussion->count_comment($v['id_discuss']);?><br/><small><?php echo $v['updatedate']?></small>

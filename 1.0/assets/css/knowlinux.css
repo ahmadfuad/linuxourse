@@ -28,6 +28,7 @@ pre{display: inline}
 .home_login{}
 .welcome_message{color:#fff;}
 /*dashboard*/
+.notification{background-color: #008CBA;padding: 0 10px;color: #fff;font-size: 0.8em;}
 .joinmateri{text-align: left;background-color: #fff;padding:20px;border-bottom: 1px solid #E8E8E8}
 .joinmateri p{margin:0;}
 .joinmateri:hover{background-color: #008cba;color:#fff;}
@@ -89,8 +90,8 @@ pre{display: inline}
 .discuss-item .avatar{width:45px;height:45px;float:left;display: block}
 .discuss-item .detail{width:80%;height:45px;float:left;display: block}
 .discuss-item .title{height:60px;}
-.linktaggreen{color:#fff;background-color: green;padding:0.1em;width:40px;font-size: 11px}
-.linktagblue{color:#fff;background-color: blue;padding:0.1em;width:40px;font-size: 11px}
+.linktaggreen{color:#fff;background-color: green;padding: 0 0.4em;width:40px;font-size: 11px}
+.linktagblue{color:#fff;background-color: blue;padding: 0 0.4em;width:40px;font-size: 11px}
 .linktaggreen:hover,.linktagblue:hover{color:#fff;background-color: gray};
 .discuss-comments{background-color: #F4F4F4;padding:5px;}
 .comment-item{background-color: #F4F4F4;padding:5px;}
