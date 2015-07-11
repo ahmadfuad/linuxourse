@@ -63,7 +63,7 @@
 <nav style="display:block;height:30%"></nav>
 	<div class="row">
 		<center>
-		<span class="super-center">		
+		<span class="super-center">
 		<h2>Learning Linux Without Install Linux</h2>
 		<h1>Linuxourse</h1>
 		<p>For Free. For Everyone. Forever</p>
@@ -162,13 +162,13 @@
 <script type="text/javascript">
 	$(document).ready(function()
 		{
-			var height = $(document).height()-$('#home_user').height() - $('#home_quote').height() - $('#otherCourse').height() - $('#footer').height() - 550;
+			var height = $(document).height()-$('#home_user').height() - $('#home_quote').height() - $('#otherCourse').height() - $('#footer').height() - 500;
 			$('.home-cover').css('height',height);
 			//navbar style
 			$("#navbar").mouseenter(function(){whiteDiv();});
 			$("#navbar").mouseleave(function(){transparentDiv();});
 			//scroll
-			$(window).scroll(function () { 
+			$(window).scroll(function () {
 			    if( $(window).scrollTop() > height ) {
 			      whiteDiv();
 			    } else {

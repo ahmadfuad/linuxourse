@@ -17,7 +17,7 @@ class CourseAPI extends base { //class for public
 		$results = array();
 		switch ($type) {
 			//ON PROGRESS || COMPLETED COURSE
-			case 'onprogress' || 'completed':
+			case 'incomplete' || 'completed':
 			$userCourse = $this->m_course->courseByUser($idStudent);
 			// print_r($userCourse);
 			foreach($userCourse as $uc):
@@ -43,6 +43,7 @@ class CourseAPI extends base { //class for public
 					//setup results
 					$materi = array(
 						'idmateri'=>$uc['id_materi'],
+						'encidmateri'=>$id,
 						'title'=>$uc['title'],
 						'percentage'=>$listRecentPercentage,
 						'log'=>$log
@@ -260,6 +261,34 @@ class CourseAPI extends base { //class for public
 		$results = $this->db->get()->result_array();
 		echo json_encode($results);
 	}
+	//add participant
+	public function addParticipant()
+	{
+		$data = file_get_contents("php://input");
+		$data = json_decode($data);
+		$idtest = $data->idtest;
+		$iduser = $data->iduser;
+		//is exist
+		$this->db->where('idTest',$idtest);
+		$this->db->where('id_user',$iduser);
+		$querystatus = $this->db->get('doTest');
+		if($querystatus->num_rows()>0){
+			echo "Alert\nYou Have Added This User";
+		}else{
+			//add user to database
+			$data = array(
+				'idDoTest'=>$iduser.'-'.$idtest,
+				'id_user'=>$iduser,
+				'idTest'=>$idtest,
+				'startDoTest'=>'0000-00-00 00:00:00',
+				'endDoTest'=>'0000-00-00 00:00:00',
+				'doTestAs'=>'participant',
+				'doTestResult'=>''
+			);
+			$this->db->insert('doTest',$data);
+			echo "Success\nSending Test Invitation";
+		}
+	}
 	/*****************************************/
 	//REGEX
 	/*****************************************/
@@ -341,16 +370,35 @@ class CourseAPI extends base { //class for public
 			case 'invitation'://test invitation
 			$iduser = $this->session->userdata['student_login']['id_user'];
 			$this->db->where('doTest.id_user',$iduser);
+			$this->db->where('doTest.startDoTest','0000-00-00 00:00:00');
 			$this->db->join('test','doTest.idTest = test.idTest');
 			$this->db->order_by('test.idTest','DESC');
-			$query = $this->db->get('doTest');
+			$query = $this->db->get('doTest')->result_array();
 			$json = json_encode($query);
 			break;
-
 			default:
 			$json = [];
 			break;
 		}
 		echo $json;
+	}
+	//action test invitation
+	public function actionTestInvitation()
+	{
+		$data = file_get_contents("php://input");
+		$data = json_decode($data);
+		$action = $data->action;
+		$idtest = $data->idtest;
+		switch ($action) {
+			case 'start':
+				return true;
+				break;
+			case 'exit':
+				$iduser = $this->session->userdata['student_login']['id_user'];
+				$this->db->where('id_user',$iduser);
+				$this->db->where('idTest',$idtest);
+				return $this->db->delete('doTest');
+				break;
+		}
 	}
 }

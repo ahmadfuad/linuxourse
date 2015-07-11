@@ -43,6 +43,7 @@ class m extends base { //class for public
 		}
 		$data = array(
 			'title'=>'Student Dashboard',
+			'userCourse'=>$this->m_course->courseByUser($idStudent),
 			'recentCourse'=>$this->m_course->recentCourseByUser($idStudent),
 			'myMateri'=>$this->m_course->showMyIdMateri($this->session->userdata['student_login']['id_user']),
 			'allMateri'=>$this->m_course->showAllMateri(),
@@ -111,7 +112,7 @@ class m extends base { //class for public
 				}
 			}
 			//manage password
-			if(!empty($_POST['input_newpassword'])){				
+			if(!empty($_POST['input_newpassword'])){
 				$newpassword = md5(md5($_POST['input_newpassword']));
 			}else{
 				$newpassword = $this->session->userdata['student_login']['password'];

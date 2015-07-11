@@ -21,7 +21,7 @@
 	function showlast(x){
 		id = 'last-'+x;
 		if($('#'+id).hover()){
-			$('#'+id).show();			
+			$('#'+id).show();
 		}
 		else {
 			$('#'+id).hide();
@@ -53,7 +53,7 @@
 						<h1>Recent Course</h1>
 						<hr/>
 						<p>
-							<?php 
+							<?php
 							echo $recentCourse['materi_title'];?> :: Level <?php echo $recentCourse['level'];
 							$id = base64_encode(base64_encode($recentCourse['id_materi']));
 							$id = str_replace('=', '', $id);
@@ -94,7 +94,7 @@
 				<div class="large-12 columns">
 					<dl class="tabs" data-tab>
 						<dd style="width:25%;"><a href="#newtest" style="background-color:#fff;color:#008CBA" href="#">+ New Test</a></dd>
-						<dd style="width:25%" class="active"><a ng-click="getList('oprogress')" href="#courseList">On Progress (<?php echo $this->m_course->countMyCourse($this->session->userdata['student_login']['id_user'],'incomplete')?>)</a></dd>
+						<dd style="width:25%" class="active"><a ng-click="getList('incomplete')" href="#courseList">On Progress (<?php echo $this->m_course->countMyCourse($this->session->userdata['student_login']['id_user'],'incomplete')?>)</a></dd>
 						<dd style="width:25%"><a ng-click="getList('completed')" href="#courseList">Completed (<?php echo $this->m_course->countMyCourse($this->session->userdata['student_login']['id_user'],'completed')?>)</a></dd>
 						<dd style="width:25%"><a ng-click="getList('mytest')" href="#courseList">Join Test (<?php echo $this->m_course->countMyCourse($this->session->userdata['student_login']['id_user'],'completed')?>)</a></dd>
 					</dl>
@@ -102,11 +102,11 @@
 			</center>
 		</section>
 		<section id="completion">
-			<center>		
-				<div class="row">			
+			<center>
+				<div class="row">
 					<div class="large-10 collapse" columns>
 						<!-- skill completion -->
-						<div class="row">						
+						<div class="row">
 							<div class="tabs-content">
 								<!-- new test -->
 								<div class="content" id="newtest">
@@ -217,7 +217,7 @@
 									<div ng-hide="listLoader" data-alert class="alert-box info">{{listLoaderText}}</div>
 									<!-- list -->
 									<a ng-repeat="list in courseList" onmouseout="hidelast(id)" onmouseover="showlast(id)" href="<?php echo site_url('course/review')?>/{{list.encidmateri}}">
-										<div class="joinmateri row">									
+										<div class="joinmateri row">
 											<div class="small-5 columns"><p><strong>{{list.title}}</strong></p></div>
 											<div class="small-4 columns">
 												<div style="height:10px;margin-top:5px" class="radius progress">
@@ -225,18 +225,18 @@
 												</div>
 											</div>
 											<div style="float:left" class="small-1 columns"><p>{{list.percentage}}%</p></div>
-											<div class="small-2 columns"><small style="display:none" id="last-id"> {{list.log}}</small><span class="fi-play-circle" style="float:right;font-size:25px"></span></div>									
+											<div class="small-2 columns"><small style="display:none" id="last-id"> {{list.log}}</small><span class="fi-play-circle" style="float:right;font-size:25px"></span></div>
 										</div>
 									</a>
 								</div>
-								<!-- end of course list -->							
+								<!-- end of course list -->
 								<!-- start my test-->
 								<div class="content" id="mytest">
 								<p>my test</p>
 								</div>
 								<!-- end of my test -->
 							</div>
-						</div>				
+						</div>
 						<!-- badge completion -->
 						<h1>Badge Collection</h1>
 						<hr/>
@@ -260,12 +260,12 @@
 					<div>
 						<h1>Latest Joined Course : <?php echo $recentCourse['materi_title'];?> / <?php echo $recentMateriPercentage;?>%</h1>
 						<hr/>
-						<?php 
+						<?php
 						foreach($recentCompletion as $rc):
 							$nowLevelCompletion = $this->m_course->countCourseStepByLevel($recentCourse['step'],$rc['id_level']);
 						$rencentLevelCompletion = $this->m_course->countCourseByLevel($rc['id_level']);
 						$levelPercentage = ($nowLevelCompletion * 100) / $rencentLevelCompletion;
-						$levelPercentage = number_format($levelPercentage,1);						
+						$levelPercentage = number_format($levelPercentage,1);
 						?>
 						<h5 style="margin:10px">Level <?php echo $rc['level']?> : <?php echo $rc['title']?> (<?php echo $levelPercentage;?>%)</h5>
 						<div style="height:10px" class="radius progress ">
@@ -273,14 +273,14 @@
 								$levelPercentage = 0.1;
 							}echo $levelPercentage?>%;" class="meter"></span>
 						</div>
-						<table>						
+						<table>
 							<tr>
 								<th style="width:70%">Course</th>
 								<th style="width:10%">Estimate</th>
 								<th style="width:10%">Goal</th>
 								<th style="width:10%">Status</th>
 							</tr>
-							<?php 
+							<?php
 						//get recent id level  by id_user n id_materi
 							$recentLevel = $this->m_course->getMyRecentLevel($this->session->userdata['student_login']['id_user'],$recentCourse['id_materi']);
 						//get recent id course by id_user n id_materi
@@ -294,7 +294,7 @@
 							<td><?php echo $c['title'];?><br/><small style="color:gray"><?php echo $c['description']?></small></td>
 							<td><?php echo $c['estimate']?>m</td>
 							<td>
-								<?php 
+								<?php
 							if($c['id_level'] < $recentCourse['id_level'] || ($c['step'] <= $recentCourseStep && $c['level'] <= $recentLevel)){//if level n course step <= now = completed
 								if($mytime[$c['id_course']] <= $c['estimate']){//green
 									$time = $c['estimate']-$mytime[$c['id_course']];
@@ -309,7 +309,7 @@
 							?>
 						</td>
 						<td>
-							<?php 
+							<?php
 							if($c['id_level'] < $recentCourse['id_level'] || ($c['step'] <= $recentCourseStep && $c['level'] <= $recentLevel)){//if level n course step <= now = completed
 								echo '<span style="color:green" class="fi-check"></span>';
 							} else {
@@ -339,7 +339,7 @@
 <!-- other course -->
 <section id="otherCourse">
 	<center>
-		<div class="row">		
+		<div class="row">
 			<div class="large-12 collapse" columns>
 				<h1 style="margin:0">Available Course Materi</h1>
 				<p>improve the mastery of Linux by following other courses</p>
@@ -349,7 +349,7 @@
 					foreach($myMateri as $mm):
 						array_push($myIdMateri, $mm['id_materi']);
 					endforeach;?>
-					<?php 
+					<?php
 					foreach($allMateri as $am):
 						if(!in_array($am['id_materi'], $myIdMateri)){
 							$progress = 0;
@@ -360,7 +360,7 @@
 								$listTotalCourse = $this->m_course->countCourseByMateri($uc['id_materi']);
 								$progress = number_format(($listTotalnow*100/$listTotalCourse),1);
 								endif;
-								endforeach;								
+								endforeach;
 							}
 							$idMateri = base64_encode(base64_encode($am['id_materi']));
 							$idMateri = str_replace('=', '', $idMateri);
@@ -369,13 +369,13 @@
 							else{$logo = base_url('assets/img/logo/gray other logo.png'); }
 							?>
 							<a id="btn_course_item" href="#btn_resume">
-								<div style="float:left;padding: 0.9375rem;" class="large-4 columns">						
+								<div style="float:left;padding: 0.9375rem;" class="large-4 columns">
 									<div style="background-color:#FFF" class="materi-item">
 										<center>
 											<img src="<?php echo $logo?>"/>
 										</center>
 										<div class="materi-title">
-											<h4><?php echo substr($am['title'],0,20);?></h4>								
+											<h4><?php echo substr($am['title'],0,20);?></h4>
 										</div>
 										<div class="course-detail">
 											<?php echo $am['description'];?>
@@ -394,9 +394,9 @@
 										</div>
 										<a href="<?php echo site_url('course/syllabus/'.$idMateri.'/'.$titleMateri)?>" class="button">start</a>
 									</div>
-								</div>					
-							</a>						
-						<?php endforeach;?>				
+								</div>
+							</a>
+						<?php endforeach;?>
 					</div>
 				</div>
 			</div>

@@ -7,12 +7,27 @@ class test extends base { //class for public
 		parent::__construct();
 		//only for member
 		$this->load->library('user_agent');
-		$this->load->model(array('m_test'));		
+		$this->load->model(array('m_test'));
 	}
 	//join test
 	public function join()
 	{
-
+		$idtest = $this->uri->segment(3);
+		$iduser = $this->session->userdata['student_login']['id_user'];
+		$dotest = $this->m_test->getDatabaseSession($iduser,$idtest);
+		$test = $this->m_test->detailTest($idtest);
+		if($dotest['startDoTest'] == '0000-00-00 00:00:00')//never start test
+		{
+			$data = array(
+				'title'=>'Join Test',
+				'test'=>$test,
+				'dotest'=>$dotest
+				);
+			$this->baseView('test/join',$data);
+		}else
+		{
+			redirect('test/start/'.$idtest);
+		}
 	}
 	//close test
 	public function close()
@@ -42,7 +57,7 @@ class test extends base { //class for public
 		$finishingtest = $this->m_test->finishingTest($idtest,$iduser);
 		if($finishingtest)redirect(site_url('test/close/'.$idtest));//only 1 time to join test
 		$test = $this->m_test->detailTest($idtest);//get test detail
-		$mytest = $this->m_test->isMyTest($iduser,$idtest);		
+		$mytest = $this->m_test->isMyTest($iduser,$idtest);
 		$case = $this->m_test->getCase($idtest);
 		$data = array
 		(

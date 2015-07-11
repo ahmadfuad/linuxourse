@@ -84,8 +84,8 @@
 									</div>
 										<div ng-repeat="fp in foundpartisipants" class="medium-1 columns">
 											<p>
-												<a class="th" role="button" aria-label="Thumbnail" href="../assets/img/examples/space.jpg">
-													<img aria-hidden=true src="<?php echo base_url('assets/img/avatar/lisa.jpg');?>"/>
+												<a class="th" role="button" aria-label="Thumbnail" data-tooltip aria-haspopup="true" title="{{fp.username}}" href="#">
+													<img aria-hidden=true ng-src="<?php echo base_url('assets/img/avatar');?>/{{fp.pp}}"/>
 												</a>
 												<br/>
 												<a ng-click="addParticipant(fp.id_user)" class="primary label" href="#add-participant">+</a>
@@ -110,8 +110,8 @@
 									</div>
 										<div ng-repeat="participant in participants" class="medium-1 columns">
 											<p>
-												<a class="th" role="button" aria-label="Thumbnail" href="../assets/img/examples/space.jpg">
-													<img aria-hidden=true src="<?php echo base_url('assets/img/avatar/lisa.jpg');?>"/>
+												<a class="th" role="button" aria-label="Thumbnail" data-tooltip aria-haspopup="true" title="{{fp.username}}}" href="#">
+													<img aria-hidden=true src="<?php echo base_url('assets/img/avatar');?>/{{fp.pp}}"/>
 												</a>
 												<br/>
 												<a class="alert label" href="#remove-participant">x</a>

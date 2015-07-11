@@ -57,7 +57,7 @@
 						<li id="news"><a style="margin-top: 4px;" href="<?php echo site_url('news')?>">News</a></li>
 						<li id="help"><a style="margin-top: 4px;" href="<?php echo site_url('news/read/TWc9PQ/Help')?>">Help</a></li>
 						<li id="about"><a style="margin-top: 4px;" href="<?php echo site_url('news/read/TVE9PQ/About')?>">About</a></li>
-						<?php if(!empty($this->session->userdata['student_login'])){ 
+						<?php if(!empty($this->session->userdata['student_login'])){
 							if(!empty($this->session->userdata['student_login']['pp'])){
 								$src = base_url('assets/img/avatar/'.$this->session->userdata['student_login']['pp']);
 							} else {
@@ -71,7 +71,7 @@
 								</ul>
 							</li>
 							<li><a href="#menu" data-dropdown="menu-list" aria-controls="menu-list" aria-expanded="false" class="secondary dropdown has-dropdown not-click"><img style="width:30px;border-radius:30px" src="<?php echo $src?>"/></a>
-								<ul id="menu-list" data-dropdown-content class="dropdownme f-dropdown" aria-hidden="true" tabindex="-1">
+								<ul id="menu-list" data-options="align:left" data-dropdown-content class="dropdownme f-dropdown" aria-hidden="true" tabindex="-1">
 									<li><a href="<?php echo site_url('student/v/'.$this->session->userdata['student_login']['username']);?>"><strong><?php echo $this->session->userdata['student_login']['username'];?></strong><br/><small>My Profile Page</small></a></li>
 									<li><a href="<?php echo site_url('m/test/new')?>"><span class="fi-grid"></span>  Dashboard</a></li>
 									<li><a href="<?php echo site_url('m/mytest')?>"><span class="fi-grid"></span>  My Test</a></li>
@@ -95,7 +95,9 @@
 				<!-- for invitation -->
 				<span ng-hide="invitationbox">
 				<dl ng-repeat="invitation in invitations" id="invite-{{invitation.idTest}}">
-				  <dt>from Fossil <span style="float:right"><a ng-click="startTest()" class="label sucess" href="#starttest">start</a> <a ng-click="closeTest()" class="label alert" href="#exittest">x</a></span></dt>
+				  <dt>from Fossil <span style="float:right">
+						<a ng-click="actionTest(invitation.idTest,'start')" class="label sucess" href="#starttest">start</a>
+						<a ng-click="actionTest(invitation.idTest,'exit')" class="label alert" href="#exittest">x</a></span></dt>
 				  <dd><strong>start</strong> 2015-05-23. <strong>end</strong> 2015-05-23.</dd>
 				</dl id="2">
 				</span>

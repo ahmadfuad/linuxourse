@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="http://127.0.0.1/project/2015/linuxourse.me/1.0/assets/css/foundation.css" media="screen">
+	<link rel="stylesheet" type="text/css" href="http://127.0.0.1/project/2015/linuxourse.me/1.0/assets/css/foundation-icons.css" media="screen">
+	<link rel="stylesheet" type="text/css" href="http://127.0.0.1/project/2015/linuxourse.me/1.0/assets/css/normalize.css" media="screen">
+	<link rel="stylesheet" type="text/css" href="http://127.0.0.1/project/2015/linuxourse.me/1.0/assets/css/knowlinux.css">
+	<link rel="icon" href="http://127.0.0.1/project/2015/linuxourse.me/1.0/assets/img/linuxourse-logo-black.png">
+	<script type="text/javascript" src="http://127.0.0.1/project/2015/linuxourse.me/1.0/assets/js/linuxourse.js"></script>
+	<script type="text/javascript" src="http://127.0.0.1/project/2015/linuxourse.me/1.0/assets/js/vendor/modernizr.js"></script>
+	<script src="http://127.0.0.1/project/2015/linuxourse.me/1.0/assets/js/vendor/jquery.js"></script>
+	<script>
+		$(document).ready(function(){
+			$('#progressanimate').toggle('slow');
+		});
+		var rooturl = 'http://127.0.0.1/project/2015/linuxourse.me/1.0/';
+	</script>
+	<script type="text/javascript" src="http://127.0.0.1/project/2015/linuxourse.me/1.0/assets/js/angular/angular.min.js"></script>
+	<script type="text/javascript" src="http://127.0.0.1/project/2015/linuxourse.me/1.0/assets/js/angular/angular-sanitize.js"></script>
+	<script type="text/javascript" src="http://127.0.0.1/project/2015/linuxourse.me/1.0/assets/js/linuxourse-master-controller.js"></script>
+	<script>$(document).ready(function(){$("#home").addClass("activemenu")});</script><title>
+	Student Dashboard :: LINUXOURSE</title>
+</head>
+<body ng-app="appLinuxourse">
+	<!-- custom modal -->
+	<div id="customModal" class="reveal-modal small" data-reveal>
+		<h2>Linux Ecourse</h2>
+		<p class="lead">You're now students</p>
+		<p>you can login using email and password which you have made!</p>
+		<a class="close-reveal-modal">&#215;</a>
+	</div>
+	<!-- header -->
+	<section ng-controller="ctrlHeader"  id="home_header">
+		<div style="min-width:100%" class="row header">
+			<div class="small-12 large-10 large-push-1 columns">
+				<div class="small-3 columns">
+					<a href="http://127.0.0.1/project/2015/linuxourse.me/1.0/"><div class="logo"></div></a>
+				</div>
+				<div class="small-9 columns">
+					<ul style="float:right;padding-top:10px" class="inline-list">
+						<li id="home"><a style="margin-top: 4px;" href="http://127.0.0.1/project/2015/linuxourse.me/1.0/">Home</a></li>
+						<li id="discusion"><a style="margin-top: 4px;" href="http://127.0.0.1/project/2015/linuxourse.me/1.0/discussion/all">Discussion</a></li>
+						<li id="news"><a style="margin-top: 4px;" href="http://127.0.0.1/project/2015/linuxourse.me/1.0/news">News</a></li>
+						<li id="help"><a style="margin-top: 4px;" href="http://127.0.0.1/project/2015/linuxourse.me/1.0/news/read/TWc9PQ/Help">Help</a></li>
+						<li id="about"><a style="margin-top: 4px;" href="http://127.0.0.1/project/2015/linuxourse.me/1.0/news/read/TVE9PQ/About">About</a></li>
+													<li><a href="#notification" style="margin-top: 4px;" data-dropdown="notification-list" aria-controls="notification-list" aria-expanded="false" class="secondary dropdown has-dropdown not-click"><span class="notification">{{totalNotification}}</span></a>
+								<ul id="notification-list" data-dropdown-content class="dropdownme f-dropdown" aria-hidden="true" tabindex="-1">
+									<li><a ng-click="showInvitation()" href="#invite">Test Invivation ({{totalInviteNotification}})</a></li>
+									<li><a ng-click="showMessage()" href="#invite">Message (0)</a></li>
+								</ul>
+							</li>
+							<li><a href="#menu" data-dropdown="menu-list" aria-controls="menu-list" aria-expanded="false" class="secondary dropdown has-dropdown not-click"><img style="width:30px;border-radius:30px" src="http://127.0.0.1/project/2015/linuxourse.me/1.0/assets/img/avatar/cd790f1e7cfb7eef1fe75a2e5a25fc34.jpg"/></a>
+								<ul id="menu-list" data-options="align:left" data-dropdown-content class="dropdownme f-dropdown" aria-hidden="true" tabindex="-1">
+									<li><a href="http://127.0.0.1/project/2015/linuxourse.me/1.0/student/v/yussan"><strong>yussan</strong><br/><small>My Profile Page</small></a></li>
+									<li><a href="http://127.0.0.1/project/2015/linuxourse.me/1.0/m/test/new"><span class="fi-grid"></span>  Dashboard</a></li>
+									<li><a href="http://127.0.0.1/project/2015/linuxourse.me/1.0/m/mytest"><span class="fi-grid"></span>  My Test</a></li>
+									<li><a href="http://127.0.0.1/project/2015/linuxourse.me/1.0/m/test/new"><span class="fi-grid"></span>  Join Test</a></li>
+									<li><a href="http://127.0.0.1/project/2015/linuxourse.me/1.0/m/edit"><span class="fi-widget"></span>  Update Profile</a></li>
+									<li><a href="http://127.0.0.1/project/2015/linuxourse.me/1.0/m/logout"><span class="fi-x-circle"></span> Logout</a></li>
+								</ul>
+							</li>
+													</ul>
+					</div>
+				</div>
+			</div>
+		<!-- modal for header menu -->
+		<div id="modalheader" class="reveal-modal small" data-reveal>
+			<h4 style="color:#000">{{modaltitle}} <small>{{modalloader}}</small></h4>
+			<hr/>
+			<div style="max-height:400px">
+				<!-- for invitation -->
+				<span ng-hide="invitationbox">
+				<dl ng-repeat="invitation in invitations" id="invite-{{invitation.idTest}}">
+				  <dt>from Fossil <span style="float:right">
+						<a ng-click="actionTest(invitation.idTest,'start')" class="label sucess" href="#starttest">start</a>
+						<a ng-click="actionTest(invitation.idTest,'exit')" class="label alert" href="#exittest">x</a></span></dt>
+				  <dd><strong>start</strong> 2015-05-23. <strong>end</strong> 2015-05-23.</dd>
+				</dl id="2">
+				</span>
+				<!-- for message -->
+				<span ng-hide="messagebox">
+				<p>message box</p>
+				</span>
+				<a class="close-reveal-modal">&#215;</a>
+			</div>
+		</div>
+		</section>
+		<section class="divideroftopmenu"></section>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#btnoverview").click(function() {
+			$('html, body').animate({
+				scrollTop: $("#overview").offset().top
+			}, 500);
+		});
+		$(window).scroll(function(){
+			if ($(this).scrollTop() > 100) {
+				$("#btntop").fadeIn();
+			} else {
+				$("#btntop").fadeOut();
+			}
+		});
+
+		$("#btntop").click(function(){
+			$('html, body').animate({scrollTop : 0},800);
+			return false;
+		});
+	});
+	function showlast(x){
+		id = 'last-'+x;
+		if($('#'+id).hover()){
+			$('#'+id).show();			
+		}
+		else {
+			$('#'+id).hide();
+		}
+	}
+	function hidelast(x){
+		id = 'last-'+x;
+		$('#'+id).hide();
+	}
+</script>
+<span ng-controller="ctrlDashboard">
+	<a class="button" style="display:none;padding:10px;position: fixed;right: 0;bottom: 0;" id="btntop"><span style="font-size:2rem"; class="fi-arrow-up"></span></a>
+	<section id="afterlogin">
+		<center>
+						<div class="row">
+				<div class="large-2 columns"><p></p></div>
+				<div class="large-8 columns">
+					<div class="level">
+						<h1>Recent Course</h1>
+						<hr/>
+						<p>
+							Linux Shell and Command Debian Family :: Level 7</p>
+							<br>
+							<p style="font-size:30px;"><strong> 100.0%</strong></p>
+							<small style="color:gray">Recent : 2015-03-15 22:36:18</small>
+							<p><div id="progressanimate" style="height:10px" class="radius progress">
+								<span style="float:left;color:#fff;width:100.0%;" class="meter"></span>
+							</div></p>
+														<p>
+								<div class="row">
+									<form class="large-12 columns" method="GET" action="http://127.0.0.1/project/2015/linuxourse.me/1.0/course/start/T0E9PQ" class="button large">
+										<select style="height:45px;color:gray" class="large-6 columns" name="lang">
+											<option value="en">English</option>
+											<option value="id">Indonesia</option>
+										</select>
+										<button class="button button-lg large-6 columns" type="submit">Resume <i class="fi-arrow-right"></i></button>
+									</form>
+								</div>
+
+							</p>
+
+						</div>
+					</div>
+					<div class="large-3 columns"><p></p></div>
+				</div>
+			</center>
+		</section>
+		<section class="row" style="background-color:#fff">
+			<center>
+				<div class="large-12 columns">
+					<dl class="tabs" data-tab>
+						<dd style="width:25%;"><a href="#newtest" style="background-color:#fff;color:#008CBA" href="#">+ New Test</a></dd>
+						<dd style="width:25%" class="active"><a ng-click="getList('oprogress')" href="#courseList">On Progress (0)</a></dd>
+						<dd style="width:25%"><a ng-click="getList('completed')" href="#courseList">Completed (2)</a></dd>
+						<dd style="width:25%"><a ng-click="getList('mytest')" href="#courseList">Join Test (2)</a></dd>
+					</dl>
+				</div>
+			</center>
+		</section>
+		<section id="completion">
+			<center>		
+				<div class="row">			
+					<div class="large-10 collapse" columns>
+						<!-- skill completion -->
+						<div class="row">						
+							<div class="tabs-content">
+								<!-- new test -->
+								<div class="content" id="newtest">
+								<p>Completing Data</p>
+								<form name="NewTest" ng-submit="newTest()">
+								  <div class="row">
+								    <div class="small-12 columns">
+								      <div class="row">
+								        <div class="small-2 columns">
+								          <label for="testname" class="right inline">Test Name</label>
+								        </div>
+								        <div class="small-9 columns">
+								          <input type="text" id="testname" ng-model="new.testName" required>
+								        </div>
+								      </div>
+								       <div class="row">
+								        <div class="small-2 columns">
+								          <label for="notes" class="right inline">Notes To Participant</label>
+								        </div>
+								        <div class="small-9 columns">
+								        	<div data-alert class="alert-box info">
+											  Will show to participant before start a test.
+											  <a href="#" class="close">&times;</a>
+											</div>
+								          <textarea style="min-height:200px" type="text" id="notes" row="4" ng-model="new.testNotes" required></textarea>
+								        </div>
+								      </div>
+								      <br/>
+								      <div class="row">
+								        <div class="small-2 columns">
+								          <label for="organization" class="right inline">Organization</label>
+								        </div>
+								        <div class="small-9 columns">
+								          <input type="text" id="organization"  ng-model="new.organization">
+								        </div>
+								      </div>
+								      <div class="row">
+								        <div class="small-2 columns">
+								          <label for="testemail" class="right inline">Email Contact</label>
+								        </div>
+								        <div class="small-9 columns">
+								          <input type="email" id="testemail"  ng-model="new.testEmail">
+								        </div>
+								      </div>
+								      <div class="row">
+								        <div class="small-2 columns">
+								          <label for="unique" class="right inline">Unique Name</label>
+								        </div>
+								        <div class="small-9 columns">
+								        	<div data-alert class="alert-box info">
+											   Make unik test link like "my-test" without space.
+											  <a href="#" class="close">&times;</a>
+											</div>
+								          <input ng-keyup="checkUniqueLink()" type="text" id="unique" ng-model="new.testUniqueLink" placeholder="input custom unique name without space">
+									        <small ng-hide="alertUniqueBox" class="error">{{alertUniqueText}}</small>
+								        </div>
+								      </div>
+								      <div class="row">
+								        <div class="small-2 columns">
+								          <label for="open" class="right inline">Open Test</label>
+								        </div>
+								        <div class="small-9 columns">
+								          <input type="datetime-local" id="open" ng-model="new.testOpen">
+								        </div>
+								      </div>
+								       <div class="row">
+								        <div class="small-2 columns">
+								          <label for="close" class="right inline">Close Test</label>
+								        </div>
+								        <div class="small-9 columns">
+								          <input type="datetime-local" id="close" ng-model="new.testClose">
+								        </div>
+								      </div>
+								      <div class="row">
+								        <div class="small-2 columns">
+								          <label for="type" class="right inline">Test Type</label>
+								        </div>
+								        <div class="small-9 columns">
+								        	<div data-alert class="alert-box info">
+											   More options available soon.
+											  <a href="#" class="close">&times;</a>
+											</div>
+								         	<select id="type" ng-model="new.testType='private'" required>
+								         		<option value="public">Public</option>
+								         		<option value="private">Private</option>
+								         	</select>
+								        </div>
+								      </div>
+								      <br/>
+								      <div class="row">
+								        <div class="small-2 columns">
+								          <p></p>
+								        </div>
+								        <div class="small-9 columns">
+								       		<label style="float:left"><input type="checkbox" required> i have read terms of use</label>
+								         	<br/>
+								         	<br/>
+								         	<button ng-hide="btnSubmitBox" style="float:left" class="button" type="submit">Next Step</button>
+								        </div>
+								      </div>
+								    </div>
+								  </div>
+								</form>
+							</div>
+								<!-- course list -->
+								<div class="content active" id="courseList">
+									<!-- loader -->
+									<div ng-hide="listLoader" data-alert class="alert-box info">{{listLoaderText}}</div>
+									<!-- list -->
+									<a ng-repeat="list in courseList" onmouseout="hidelast(id)" onmouseover="showlast(id)" href="http://127.0.0.1/project/2015/linuxourse.me/1.0/course/review/{{list.encidmateri}}">
+										<div class="joinmateri row">									
+											<div class="small-5 columns"><p><strong>{{list.title}}</strong></p></div>
+											<div class="small-4 columns">
+												<div style="height:10px;margin-top:5px" class="radius progress">
+													<span style="float:left;color:#fff;width:{{list.percentage}}%;" class="meter"></span>
+												</div>
+											</div>
+											<div style="float:left" class="small-1 columns"><p>{{list.percentage}}%</p></div>
+											<div class="small-2 columns"><small style="display:none" id="last-id"> {{list.log}}</small><span class="fi-play-circle" style="float:right;font-size:25px"></span></div>									
+										</div>
+									</a>
+								</div>
+								<!-- end of course list -->							
+								<!-- start my test-->
+								<div class="content" id="mytest">
+								<p>my test</p>
+								</div>
+								<!-- end of my test -->
+							</div>
+						</div>				
+						<!-- badge completion -->
+						<h1>Badge Collection</h1>
+						<hr/>
+												<p><strong>you don't have</strong></p>
+												<br/>
+					</div>
+				</div>
+			</center>
+		</section>
+		<!-- recent course completion -->
+		<br/><br/>
+		<section id="overview" class="row" style="background-color:#fff;padding:30px 0">
+			<div class="large-8 large-offset-2 columns">
+				<center>
+					<div>
+						<h1>Latest Joined Course : Linux Shell and Command Debian Family / 100.0%</h1>
+						<hr/>
+												<h5 style="margin:10px">Level 1 : Shell (100.0%)</h5>
+						<div style="height:10px" class="radius progress ">
+							<span style="float:left;color:#fff;width:100.0%;" class="meter"></span>
+						</div>
+						<table>						
+							<tr>
+								<th style="width:70%">Course</th>
+								<th style="width:10%">Estimate</th>
+								<th style="width:10%">Goal</th>
+								<th style="width:10%">Status</th>
+							</tr>
+													<tr>
+							<td>Welcome To Materi<br/><small style="color:gray">Welcome To Materi</small></td>
+							<td>1m</td>
+							<td>
+								<span style="font-weight:bold;color:green"> -0m</span>						</td>
+						<td>
+							<span style="color:green" class="fi-check"></span>						</td>
+					</tr>
+											<tr>
+							<td>command line<br/><small style="color:gray">Know Linux command line</small></td>
+							<td>30m</td>
+							<td>
+								<span style="font-weight:bold;color:green"> -28m</span>						</td>
+						<td>
+							<span style="color:green" class="fi-check"></span>						</td>
+					</tr>
+											<tr>
+							<td>Working directories and hierarchal relationships<br/><small style="color:gray">Structure and explanation directory in Linux</small></td>
+							<td>30m</td>
+							<td>
+								<span style="font-weight:bold;color:green"> -20m</span>						</td>
+						<td>
+							<span style="color:green" class="fi-check"></span>						</td>
+					</tr>
+											<tr>
+							<td>Environment Variable<br/><small style="color:gray">Linux Environtment</small></td>
+							<td>10m</td>
+							<td>
+								<span style="font-weight:bold;color:green"> -6m</span>						</td>
+						<td>
+							<span style="color:green" class="fi-check"></span>						</td>
+					</tr>
+											<tr>
+							<td>Path Absolut dan Relatif<br/><small style="color:gray">Knowing diference active directory and other directories</small></td>
+							<td>5m</td>
+							<td>
+								<span style="font-weight:bold;color:red"> +1m</span>						</td>
+						<td>
+							<span style="color:green" class="fi-check"></span>						</td>
+					</tr>
+											<tr>
+							<td>Manual Page<br/><small style="color:gray">Mengetahui fungsi dan penggunaan dari halaman manual</small></td>
+							<td>5m</td>
+							<td>
+								<span style="font-weight:bold;color:red"> +3m</span>						</td>
+						<td>
+							<span style="color:green" class="fi-check"></span>						</td>
+					</tr>
+											<tr>
+							<td>Input Output Standar<br/><small style="color:gray">Input output standar on Linux Shell</small></td>
+							<td>10m</td>
+							<td>
+								<span style="font-weight:bold;color:green"> -5m</span>						</td>
+						<td>
+							<span style="color:green" class="fi-check"></span>						</td>
+					</tr>
+											<tr>
+							<td>Input Output Standar :: 2<br/><small style="color:gray">more about Linux input output standart</small></td>
+							<td>20m</td>
+							<td>
+								<span style="font-weight:bold;color:green"> -16m</span>						</td>
+						<td>
+							<span style="color:green" class="fi-check"></span>						</td>
+					</tr>
+											<tr>
+							<td>Redirection<br/><small style="color:gray">redirection</small></td>
+							<td>5m</td>
+							<td>
+								<span style="font-weight:bold;color:red"> +2m</span>						</td>
+						<td>
+							<span style="color:green" class="fi-check"></span>						</td>
+					</tr>
+											<tr>
+							<td>Redirection Case<br/><small style="color:gray">Redirection </small></td>
+							<td>10m</td>
+							<td>
+								<span style="font-weight:bold;color:red"> +2m</span>						</td>
+						<td>
+							<span style="color:green" class="fi-check"></span>						</td>
+					</tr>
+											<tr>
+							<td>Pipeline<br/><small style="color:gray">Pipeline to manage command on Linux shell</small></td>
+							<td>5m</td>
+							<td>
+								<span style="font-weight:bold;color:red"> +2m</span>						</td>
+						<td>
+							<span style="color:green" class="fi-check"></span>						</td>
+					</tr>
+											<tr>
+							<td>Pipeline Case<br/><small style="color:gray">Linux pipeline case</small></td>
+							<td>10m</td>
+							<td>
+								<span style="font-weight:bold;color:green"> -0m</span>						</td>
+						<td>
+							<span style="color:green" class="fi-check"></span>						</td>
+					</tr>
+									</table>
+				<br/><br/>
+									<h5 style="margin:10px">Level 2 : File And Directory Management (100.0%)</h5>
+						<div style="height:10px" class="radius progress ">
+							<span style="float:left;color:#fff;width:100.0%;" class="meter"></span>
+						</div>
+						<table>						
+							<tr>
+								<th style="width:70%">Course</th>
+								<th style="width:10%">Estimate</th>
+								<th style="width:10%">Goal</th>
+								<th style="width:10%">Status</th>
+							</tr>
+													<tr>
+							<td>Linux FIle System<br/><small style="color:gray">Linux file system description, standart and using</small></td>
+							<td>10m</td>
+							<td>
+								<span style="font-weight:bold;color:green"> -0m</span>						</td>
+						<td>
+							<span style="color:green" class="fi-check"></span>						</td>
+					</tr>
+											<tr>
+							<td>Virtual Memory<br/><small style="color:gray">Virtual memory is importand part of Linux shell</small></td>
+							<td>5m</td>
+							<td>
+								<span style="font-weight:bold;color:red"> +2m</span>						</td>
+						<td>
+							<span style="color:green" class="fi-check"></span>						</td>
+					</tr>
+											<tr>
+							<td>Ownership 1 : Introduce<br/><small style="color:gray">Ownership on Linux file and directory management</small></td>
+							<td>10m</td>
+							<td>
+								<span style="font-weight:bold;color:green"> -3m</span>						</td>
+						<td>
+							<span style="color:green" class="fi-check"></span>						</td>
+					</tr>
+											<tr>
+							<td>Ownership 2 : Permisions<br/><small style="color:gray">Manage permision on Linux file and directory permissions</small></td>
+							<td>15m</td>
+							<td>
+								<span style="font-weight:bold;color:green"> -10m</span>						</td>
+						<td>
+							<span style="color:green" class="fi-check"></span>						</td>
+					</tr>
+											<tr>
+							<td>Ownership 3 : Umask<br/><small style="color:gray">Pengenalan dan configurasi umask</small></td>
+							<td>15m</td>
+							<td>
+								<span style="font-weight:bold;color:green"> -8m</span>						</td>
+						<td>
+							<span style="color:green" class="fi-check"></span>						</td>
+					</tr>
+											<tr>
+							<td>Ownership 4 : Change Owner<br/><small style="color:gray">Changer owner file or folder to other user or group</small></td>
+							<td>20m</td>
+							<td>
+								<span style="font-weight:bold;color:green"> -13m</span>						</td>
+						<td>
+							<span style="color:green" class="fi-check"></span>						</td>
+					</tr>
+											<tr>
+							<td>Link<br/><small style="color:gray">link functional on Linux Shell</small></td>
+							<td>10m</td>
+							<td>
+								<span style="font-weight:bold;color:green"> -5m</span>						</td>
+						<td>
+							<span style="color:green" class="fi-check"></span>						</td>
+					</tr>
+											<tr>
+							<td>Editing Files<br/><small style="color:gray">How to edit a file on Linux Shell</small></td>
+							<td>20m</td>
+							<td>
+								<span style="font-weight:bold;color:green"> -8m</span>						</td>
+						<td>
+							<span style="color:green" class="fi-check"></span>						</td>
+					</tr>
+											<tr>
+							<td>File and Directory Management Final Test<br/><small style="color:gray">File and Directory Managemen Final Test</small></td>
+							<td>30m</td>
+							<td>
+								<span style="font-weight:bold;color:green"> -21m</span>						</td>
+						<td>
+							<span style="color:green" class="fi-check"></span>						</td>
+					</tr>
+									</table>
+				<br/><br/>
+									<h5 style="margin:10px">Level 3 : Process Management (100.0%)</h5>
+						<div style="height:10px" class="radius progress ">
+							<span style="float:left;color:#fff;width:100.0%;" class="meter"></span>
+						</div>
+						<table>						
+							<tr>
+								<th style="width:70%">Course</th>
+								<th style="width:10%">Estimate</th>
+								<th style="width:10%">Goal</th>
+								<th style="width:10%">Status</th>
+							</tr>
+													<tr>
+							<td>Linux Process Concept<br/><small style="color:gray">Process Structure</small></td>
+							<td>40m</td>
+							<td>
+								<span style="font-weight:bold;color:green"> -38m</span>						</td>
+						<td>
+							<span style="color:green" class="fi-check"></span>						</td>
+					</tr>
+											<tr>
+							<td>Signal<br/><small style="color:gray">Signal on linux process management</small></td>
+							<td>5m</td>
+							<td>
+								<span style="font-weight:bold;color:red"> +3m</span>						</td>
+						<td>
+							<span style="color:green" class="fi-check"></span>						</td>
+					</tr>
+											<tr>
+							<td>Controll Process On Shell :: 1<br/><small style="color:gray">How to controll process on shell part one</small></td>
+							<td>20m</td>
+							<td>
+								<span style="font-weight:bold;color:green"> -8m</span>						</td>
+						<td>
+							<span style="color:green" class="fi-check"></span>						</td>
+					</tr>
+											<tr>
+							<td>Controll Process On Shell :: 2<br/><small style="color:gray">How to controll process on shell part 2, job controll</small></td>
+							<td>20m</td>
+							<td>
+								<span style="font-weight:bold;color:green"> -6m</span>						</td>
+						<td>
+							<span style="color:green" class="fi-check"></span>						</td>
+					</tr>
+											<tr>
+							<td>Process Management Final Test<br/><small style="color:gray">Proces management final test</small></td>
+							<td>30m</td>
+							<td>
+								<span style="font-weight:bold;color:green"> -3m</span>						</td>
+						<td>
+							<span style="color:green" class="fi-check"></span>						</td>
+					</tr>
+									</table>
+				<br/><br/>
+									<h5 style="margin:10px">Level 4 : Boot Processes Management (100.0%)</h5>
+						<div style="height:10px" class="radius progress ">
+							<span style="float:left;color:#fff;width:100.0%;" class="meter"></span>
+						</div>
+						<table>						
+							<tr>
+								<th style="width:70%">Course</th>
+								<th style="width:10%">Estimate</th>
+								<th style="width:10%">Goal</th>
+								<th style="width:10%">Status</th>
+							</tr>
+													<tr>
+							<td>Booting<br/><small style="color:gray">Boot Process Management</small></td>
+							<td>30m</td>
+							<td>
+								<span style="font-weight:bold;color:green"> -28m</span>						</td>
+						<td>
+							<span style="color:green" class="fi-check"></span>						</td>
+					</tr>
+									</table>
+				<br/><br/>
+									<h5 style="margin:10px">Level 5 : System Administration (100.0%)</h5>
+						<div style="height:10px" class="radius progress ">
+							<span style="float:left;color:#fff;width:100.0%;" class="meter"></span>
+						</div>
+						<table>						
+							<tr>
+								<th style="width:70%">Course</th>
+								<th style="width:10%">Estimate</th>
+								<th style="width:10%">Goal</th>
+								<th style="width:10%">Status</th>
+							</tr>
+													<tr>
+							<td>Administration System<br/><small style="color:gray">System Administration</small></td>
+							<td>30m</td>
+							<td>
+								<span style="font-weight:bold;color:green"> -23m</span>						</td>
+						<td>
+							<span style="color:green" class="fi-check"></span>						</td>
+					</tr>
+											<tr>
+							<td>User dan Group<br/><small style="color:gray">Pencatatan User dan Group</small></td>
+							<td>15m</td>
+							<td>
+								<span style="font-weight:bold;color:green"> -14m</span>						</td>
+						<td>
+							<span style="color:green" class="fi-check"></span>						</td>
+					</tr>
+											<tr>
+							<td>Home Directory<br/><small style="color:gray">Knowing Home directory on Linux</small></td>
+							<td>6m</td>
+							<td>
+								<span style="font-weight:bold;color:red"> +9m</span>						</td>
+						<td>
+							<span style="color:green" class="fi-check"></span>						</td>
+					</tr>
+									</table>
+				<br/><br/>
+									<h5 style="margin:10px">Level 6 : Storage Management (100.0%)</h5>
+						<div style="height:10px" class="radius progress ">
+							<span style="float:left;color:#fff;width:100.0%;" class="meter"></span>
+						</div>
+						<table>						
+							<tr>
+								<th style="width:70%">Course</th>
+								<th style="width:10%">Estimate</th>
+								<th style="width:10%">Goal</th>
+								<th style="width:10%">Status</th>
+							</tr>
+													<tr>
+							<td>Knowing Harddisk<br/><small style="color:gray">Knowing Harddisk</small></td>
+							<td>30m</td>
+							<td>
+								<span style="font-weight:bold;color:green"> -29m</span>						</td>
+						<td>
+							<span style="color:green" class="fi-check"></span>						</td>
+					</tr>
+											<tr>
+							<td>Linux FIle System 2<br/><small style="color:gray">Linux File System Part 2</small></td>
+							<td>20m</td>
+							<td>
+								<span style="font-weight:bold;color:green"> -19m</span>						</td>
+						<td>
+							<span style="color:green" class="fi-check"></span>						</td>
+					</tr>
+											<tr>
+							<td>Extended Filesystem<br/><small style="color:gray">Linux using Extended Filesystem</small></td>
+							<td>10m</td>
+							<td>
+								<span style="font-weight:bold;color:green"> -7m</span>						</td>
+						<td>
+							<span style="color:green" class="fi-check"></span>						</td>
+					</tr>
+									</table>
+				<br/><br/>
+									<h5 style="margin:10px">Level 7 : Shell scripting (100.0%)</h5>
+						<div style="height:10px" class="radius progress ">
+							<span style="float:left;color:#fff;width:100.0%;" class="meter"></span>
+						</div>
+						<table>						
+							<tr>
+								<th style="width:70%">Course</th>
+								<th style="width:10%">Estimate</th>
+								<th style="width:10%">Goal</th>
+								<th style="width:10%">Status</th>
+							</tr>
+													<tr>
+							<td>Shell scripting<br/><small style="color:gray">Shell scripting</small></td>
+							<td>45m</td>
+							<td>
+								<span style="font-weight:bold;color:green"> -38m</span>						</td>
+						<td>
+							<span style="color:green" class="fi-check"></span>						</td>
+					</tr>
+											<tr>
+							<td>History<br/><small style="color:gray">Smart history on Linux Shell</small></td>
+							<td>15m</td>
+							<td>
+								<span style="font-weight:bold;color:green"> -15m</span>						</td>
+						<td>
+							<span style="color:green" class="fi-check"></span>						</td>
+					</tr>
+											<tr>
+							<td>bash Scripting<br/><small style="color:gray">Knowing bash scripting and how to use it</small></td>
+							<td>10m</td>
+							<td>
+								<span style="font-weight:bold;color:green"> -10m</span>						</td>
+						<td>
+							<span style="color:green" class="fi-check"></span>						</td>
+					</tr>
+									</table>
+				<br/><br/>
+						<form class="" method="GET" action="http://127.0.0.1/project/2015/linuxourse.me/1.0/course/start/T0E9PQ" class="button large">
+				<select style="height:45px" class="large-6 columns" name="lang">
+					<option value="en">English</option>
+					<option value="id">Indonesia</option>
+				</select>
+				<button class="button button-lg large-6 columns" type="submit">Resume <i class="fi-arrow-right"></i></button>
+			</form>
+			<br/>
+		</div>
+	</center>
+</div>
+</section>
+<!-- other course -->
+<section id="otherCourse">
+	<center>
+		<div class="row">		
+			<div class="large-12 collapse" columns>
+				<h1 style="margin:0">Available Course Materi</h1>
+				<p>improve the mastery of Linux by following other courses</p>
+				<!-- skill completion -->
+				<div class="row">
+										<div style="border:1px solid #990000;padding-left:20px;margin:0 0 10px 0;">
+
+<h4>A PHP Error was encountered</h4>
+
+<p>Severity: Notice</p>
+<p>Message:  Undefined variable: userCourse</p>
+<p>Filename: m/dashboard.php</p>
+<p>Line Number: 357</p>
+
+</div><div style="border:1px solid #990000;padding-left:20px;margin:0 0 10px 0;">
+
+<h4>A PHP Error was encountered</h4>
+
+<p>Severity: Warning</p>
+<p>Message:  Invalid argument supplied for foreach()</p>
+<p>Filename: m/dashboard.php</p>
+<p>Line Number: 357</p>
+
+</div>							<a id="btn_course_item" href="#btn_resume">
+								<div style="float:left;padding: 0.9375rem;" class="large-4 columns">						
+									<div style="background-color:#FFF" class="materi-item">
+										<center>
+											<img src="http://127.0.0.1/project/2015/linuxourse.me/1.0/assets/img/logo/gray introduce logo.png"/>
+										</center>
+										<div class="materi-title">
+											<h4>Introduce Linux</h4>								
+										</div>
+										<div class="course-detail">
+											introduction to the history of Linux, components and excess										</div>
+										<div class="thumb-progress row">
+											<div class="small-12 columns">
+												<div class="small-10 columns collapse">
+													<div style="height:10px;margin-top:5px" class="radius progress">
+														<span style="float:left;color:gray;width:<div style="border:1px solid #990000;padding-left:20px;margin:0 0 10px 0;">
+
+<h4>A PHP Error was encountered</h4>
+
+<p>Severity: Notice</p>
+<p>Message:  Undefined variable: progress</p>
+<p>Filename: m/dashboard.php</p>
+<p>Line Number: 387</p>
+
+</div>%;" class="meter"></span>
+													</div>
+												</div>
+												<div class="small-2 columns">
+													<div style="border:1px solid #990000;padding-left:20px;margin:0 0 10px 0;">
+
+<h4>A PHP Error was encountered</h4>
+
+<p>Severity: Notice</p>
+<p>Message:  Undefined variable: progress</p>
+<p>Filename: m/dashboard.php</p>
+<p>Line Number: 391</p>
+
+</div>%
+												</div>
+											</div>
+										</div>
+										<a href="http://127.0.0.1/project/2015/linuxourse.me/1.0/course/syllabus/TVE9PQ/Introduce-Linux" class="button">start</a>
+									</div>
+								</div>					
+							</a>						
+						<div style="border:1px solid #990000;padding-left:20px;margin:0 0 10px 0;">
+
+<h4>A PHP Error was encountered</h4>
+
+<p>Severity: Notice</p>
+<p>Message:  Undefined variable: userCourse</p>
+<p>Filename: m/dashboard.php</p>
+<p>Line Number: 357</p>
+
+</div><div style="border:1px solid #990000;padding-left:20px;margin:0 0 10px 0;">
+
+<h4>A PHP Error was encountered</h4>
+
+<p>Severity: Warning</p>
+<p>Message:  Invalid argument supplied for foreach()</p>
+<p>Filename: m/dashboard.php</p>
+<p>Line Number: 357</p>
+
+</div>							<a id="btn_course_item" href="#btn_resume">
+								<div style="float:left;padding: 0.9375rem;" class="large-4 columns">						
+									<div style="background-color:#FFF" class="materi-item">
+										<center>
+											<img src="http://127.0.0.1/project/2015/linuxourse.me/1.0/assets/img/logo/gray terminal logo.png"/>
+										</center>
+										<div class="materi-title">
+											<h4>Linux Shell and Comm</h4>								
+										</div>
+										<div class="course-detail">
+											learn linux from the basic commands to shell scripting										</div>
+										<div class="thumb-progress row">
+											<div class="small-12 columns">
+												<div class="small-10 columns collapse">
+													<div style="height:10px;margin-top:5px" class="radius progress">
+														<span style="float:left;color:gray;width:<div style="border:1px solid #990000;padding-left:20px;margin:0 0 10px 0;">
+
+<h4>A PHP Error was encountered</h4>
+
+<p>Severity: Notice</p>
+<p>Message:  Undefined variable: progress</p>
+<p>Filename: m/dashboard.php</p>
+<p>Line Number: 387</p>
+
+</div>%;" class="meter"></span>
+													</div>
+												</div>
+												<div class="small-2 columns">
+													<div style="border:1px solid #990000;padding-left:20px;margin:0 0 10px 0;">
+
+<h4>A PHP Error was encountered</h4>
+
+<p>Severity: Notice</p>
+<p>Message:  Undefined variable: progress</p>
+<p>Filename: m/dashboard.php</p>
+<p>Line Number: 391</p>
+
+</div>%
+												</div>
+											</div>
+										</div>
+										<a href="http://127.0.0.1/project/2015/linuxourse.me/1.0/course/syllabus/TWc9PQ/Linux-Shell-and-Command-Debian-Family" class="button">start</a>
+									</div>
+								</div>					
+							</a>						
+										
+					</div>
+				</div>
+			</div>
+		</center>
+	</section>
+
+	<!-- success login modal -->
+	<div id="loginSuccess" class="reveal-modal small" data-reveal>
+		<h2>Login Success</h2>
+		<p class="lead">welcome students</p>
+		<p>Let's improve your level!</p>
+		<a class="close-reveal-modal">&#215;</a>
+	</div>
+</span><!-- fb sdk -->
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+	var js, fjs = d.getElementsByTagName(s)[0];
+	if (d.getElementById(id)) return;
+	js = d.createElement(s); js.id = id;
+	js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=678259512186808&version=v2.3";
+	fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<!-- end of fb sdk -->
+<!-- footer -->
+<section id="footer">
+	<div style="min-width:80%" class="row">
+		<div class="large-3 medium-3 columns">
+			<div class="fb-like" data-href="https://FACEBOOK.COM/linuxourse" data-layout="standard" data-action="like" data-show-faces="true" data-share="true" data-width="200px"></div>
+			<hr/>
+		<a href="https://www.comodo.com"><img src="http://127.0.0.1/project/2015/linuxourse.me/1.0/assets/img/logo/comodo-secure.png"></a>			
+
+		</div>
+		<div class="large-2 medium-2 columns">
+			<h3 class="menu-title">Navigation</h3>
+			<p><a href="#">home</a></p>
+			<p><a href="#">help</a></p>
+			<p><a href="#">about</a></p>
+			<p><a href="#">register</a></p>
+			<p><a href="#">login</a></p>
+			<p><a href="http://127.0.0.1/project/2015/linuxourse.me/1.0/news">news</a></p>
+			<p><a target="_blank" href="http://www.emailmeform.com/builder/form/cFXuKdU7scdJQNh9">error report</a></p>
+		</div>
+		<div class="large-2 medium-2 columns">
+			<h3 class="menu-title">Course Materi</h3>
+						<p><a href="http://127.0.0.1/project/2015/linuxourse.me/1.0/course/review/TVE9PQ">Introduce Linux</a></p>
+					<p><a href="http://127.0.0.1/project/2015/linuxourse.me/1.0/course/review/TWc9PQ">Linux Shell and Command Debian Family</a></p>
+			</div>
+	<div class="large-2 medium-2 columns">
+		<h3 class="menu-title">Menu</h3>
+		<p><a href="#" data-reveal-id="verificationModal">email verification</a></p>
+		<p><a href="http://127.0.0.1/project/2015/linuxourse.me/1.0/news/read/TkE9PQ/Locked-Content">faq</a></p>
+		<p><a href="http://127.0.0.1/project/2015/linuxourse.me/1.0/news/read/TXc9PQ/Terms-And-Conditions">terms and conditions</a></p>
+		<p><a href="http://127.0.0.1/project/2015/linuxourse.me/1.0/news/read/TkE9PQ/Locked-Content">locked content</a></p>			
+	</div>
+	<div class="large-2 medium-2 columns">
+		<img style="height:100%px" src="http://127.0.0.1/project/2015/linuxourse.me/1.0/assets/img/linuxourse-logo-black.png"/><br/>
+		<strong>Linux e-Course</strong><br/>
+		copyright &copy; 2014 Yussan<br/>
+		Suported by FOSSIL
+		
+	</div>		
+</div>
+</section>
+<!-- verification modal -->
+<div id="verificationModal" class="reveal-modal tiny" data-reveal>
+	<h2>Resend Email Verification Code</h2>
+	<p class="lead">input your email used for registration below.</p>
+	<form method="POST" action="http://127.0.0.1/project/2015/linuxourse.me/1.0/p/sendVerification ">
+		<input type="text" name="inputemail" placeholder="input email">
+		<button class="tiny" style="color:#fff" type="submit">submit</button>
+	</form>
+	<a class="close-reveal-modal">&#215;</a>
+</div>
+<!-- end of verification modal -->
+<script type="text/javascript">
+	//by yussan
+	
+</script>
+<script src="http://127.0.0.1/project/2015/linuxourse.me/1.0/assets/js/foundation.min.js"></script>
+<script>
+	$(document).foundation().foundation('joyride', 'start');;
+</script>
+<!--<script src="http://127.0.0.1/project/2015/linuxourse.me/1.0/assets/js/vendor/fastclick.js"></script>-->
+<!-- Histats.com  START (hidden counter)-->
+<script type="text/javascript">document.write(unescape("%3Cscript src=%27http://s10.histats.com/js15.js%27 type=%27text/javascript%27%3E%3C/script%3E"));</script>
+<a href="http://www.histats.com" target="_blank" title="free hit counter" ><script  type="text/javascript" >
+try {Histats.start(1,2972237,4,0,0,0,"");
+Histats.track_hits();} catch(err){};
+</script></a>
+<noscript><a href="http://www.histats.com" target="_blank"><img  src="http://sstatic1.histats.com/0.gif?2972237&101" alt="free hit counter" border="0"></a></noscript>
+<!-- Histats.com  END  -->
+</body>
+</html>

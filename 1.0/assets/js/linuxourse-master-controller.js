@@ -22,11 +22,30 @@ function($scope,$http){
 		ajax.success(function(response){
 			if(response.length < 1){$scope.modalloader = 'no invitations found';}
 			else {
+				$scope.modalloader = 'total '+response.length;
 				$scope.invitations = response;
 			}
 		});
 		$scope.$apply;
-	}
+	};
+	//action test
+	$scope.actionTest = function(idtest,action)
+	{
+		$scope.modalloader = action+' test...';
+		var url = rooturl+'CourseAPI/actionTestInvitation';
+		var ajax = $http.post(url,{idtest:idtest,action:action});
+		ajax.success(function(response){
+			$('#invite-'+idtest).remove();
+			if(action=='start')
+			{
+				window.location = rooturl+'test/join/'+idtest;
+			}
+			$scope.actTotalNotification();
+		});
+		ajax.error(function(){
+			alert('something wrong');
+		});
+	};
 	//total invitation
 	$scope.actTotalNotification = function()
 	{
@@ -141,7 +160,7 @@ function($scope,$http,$timeout,$location){
 		}
 	};
 	//AUTORUN
-	$scope.getList('onprogress');
+	$scope.getList('incomplete');
 	$scope.getMyTest('open');
 }]);
 
@@ -317,7 +336,14 @@ function($scope,$http,$timeout,$location){
 	};
 	$scope.addParticipant = function(iduser)
 	{
-		alert(iduser);
+		var url = rooturl+'CourseAPI/addParticipant';
+		var ajax = $http.post(url,{idtest:idtest,iduser:iduser});
+		ajax.success(function(response){
+			alert(response);
+		});
+		ajax.error(function(){
+			alert('something wrong');
+		});
 	}
 	//AUTOSTART
 	//DETAIL TEST
