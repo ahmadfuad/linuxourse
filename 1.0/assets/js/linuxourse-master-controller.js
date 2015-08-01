@@ -344,7 +344,24 @@ function($scope,$http,$timeout,$location){
 		ajax.error(function(){
 			alert('something wrong');
 		});
-	}
+	};
+	//test result by id user
+	$scope.testResult = function(iduser)
+	{
+		var url = rooturl+'CourseAPI/testResult';
+		var ajax = $http.post(url,{iduser:iduser,idtest:idtest});
+		ajax.success(function(response){
+			//show the modal
+			$scope.score = response;
+			//convert strng to json
+			$scope.score.doTestResult = angular.toJson($scope.score.doTestResult);
+			console.log($scope.score.doTestResult);
+			$('#testResult').foundation('reveal','open');
+		});
+		ajax.error(function(){
+			alert('something wrong');
+		});
+	};
 	//AUTOSTART
 	//DETAIL TEST
 	$scope.detailTest();

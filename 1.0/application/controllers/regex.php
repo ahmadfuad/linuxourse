@@ -18,7 +18,7 @@ class regex extends base { //class for public
 
 	public function execcommand(){
 		$data = file_get_contents("php://input");
-        if(!empty($data)):
+        if(!empty($data) AND empty($_POST['command'])):
             $data = json_decode($data);
             $command = $data->command;
         else:

@@ -16,7 +16,7 @@
 				<dl class="tabs" data-tab>
 					<dd style="width:33.33%;"><a href="#newtest" style="background-color:#fff;color:#008CBA" href="#">+ New Test</a></dd>
 					<dd style="width:33.33%" class="active"><a ng-click="getMyTest('open')" href="#courseList">Open Test (<?php echo $totalopentest;?>)</a></dd>
-					<dd style="width:33.33%"><a ng-click="getMyTest('clossed')" href="#courseList">Clossed Test (<?php echo $totalclosedtest;?>)</a></dd>
+					<dd style="width:33.33%"><a ng-click="getMyTest('clossed')" href="#courseList">Closed Test (<?php echo $totalclosedtest;?>)</a></dd>
 				</dl>
 			</div>
 		</center>

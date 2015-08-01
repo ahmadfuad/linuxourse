@@ -47,6 +47,7 @@
 				</div>
 			</form>
 		</div>
+		<div class="large-1 column"><p></p></div>
 		<div class="large-5 columns">
 		<h4>Or Register Via</h4>
 		<hr/>

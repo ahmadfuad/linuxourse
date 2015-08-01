@@ -99,11 +99,10 @@ class CourseAPI extends base { //class for public
 	//GET MY TEST
 	public function getMyTest()
 	{
-
-		$results = array();
 		$data = file_get_contents("php://input");
 		$data = json_decode($data);
 		$status = $data->status;
+		$results = array();
 		$iduser = $this->session->userdata['student_login']['id_user'];
 		$test = $this->m_test->myTest($iduser,$status)->result_array();
 		$json = json_encode($test);
@@ -237,6 +236,7 @@ class CourseAPI extends base { //class for public
 				$this->db->where('doTest.endDoTest','0000-00-00 00:00:00');
 				break;
 			case 'completed':
+				$this->db->order_by('doTest.doTestScore','DESC');
 				$this->db->where('doTest.startDoTest <>','0000-00-00 00:00:00');
 				$this->db->where('doTest.endDoTest <>','0000-00-00 00:00:00');
 				break;
@@ -244,8 +244,17 @@ class CourseAPI extends base { //class for public
 			$this->db->join('user','user.id_user = doTest.id_user');
 			$this->db->where('doTest.idTest',$idtest);
 			$results = $this->db->get('doTest')->result_array();
+			$json = array();
+			foreach($results as $r):
+				if(empty($r['pp'])):
+					$r['pp'] = base_url('assets/img/avatar.png');
+				else:
+					$r['pp'] = base_url('assets/img/avatar/'.$r['pp']);
+				endif;
+				array_push($json,$r);
+			endforeach;
 			//return as echo json
-			echo json_encode($results);
+			echo json_encode($json);
 	}
 	//search member
 	public function searchMember()
@@ -259,7 +268,16 @@ class CourseAPI extends base { //class for public
 		// $this->db->join('doTest','doTest.id_user = user.id_user','left');
 		$this->db->from('user');
 		$results = $this->db->get()->result_array();
-		echo json_encode($results);
+		$json = array();
+		foreach($results as $r):
+				if(empty($r['pp'])):
+					$r['pp'] = base_url('assets/img/avatar.png');
+				else:
+					$r['pp'] = base_url('assets/img/avatar/'.$r['pp']);
+				endif;
+				array_push($json,$r);
+			endforeach;
+		echo json_encode($json);
 	}
 	//add participant
 	public function addParticipant()
@@ -288,6 +306,38 @@ class CourseAPI extends base { //class for public
 			$this->db->insert('doTest',$data);
 			echo "Success\nSending Test Invitation";
 		}
+	}
+	//get test results
+	public function testResult()
+	{
+		$data = file_get_contents("php://input");
+		$data = json_decode($data);
+		$iduser = $data->iduser;
+		$idtest = $data->idtest;
+		//user and do test data
+		$this->db->join('user','user.id_user = doTest.id_user');//do join
+		$result = $this->db->get_where('doTest',
+		array('doTest.id_user'=>$iduser,'idTest'=>$idtest))->row_array(); //get the results
+		//generate json result
+		//status do test
+		if($result['startDoTest'] == '0000-00-00 00:00:00' AND $result['endDoTest'] == '0000-00-00 00:00:00')
+		{
+			$result['statusStart'] = 'waiting for approval';
+		}else if($result['startDoTest'] != '0000-00-00 00:00:00' AND $result['endDoTest'] != '0000-00-00 00:00:00')
+		{
+			$result['statusStart'] = 'ongoing';
+		}else{
+			$result['statusStart'] = 'test is completed';
+		}
+		echo json_encode($result);
+	}
+	//get specifik test results
+	public function specificTestResults()
+	{
+		$data = file_get_contents("php://input");
+		$data = json_decode($data);
+		$iduser = $data->iduser;
+		$idtest = $data->idtest;
 	}
 	/*****************************************/
 	//REGEX

@@ -8,6 +8,7 @@ by yussan @xyussanx
 body{font-size:12px;font-family: oxygen}
 ul.menu{list-style: none;line-height: 1.2}
 pre{display: inline}
+.width-100{width:100%}
 /*home only*/
 .home-navbar{font-size:2em;width:100%;padding: 10px 0;height: initial;position: fixed;background-color: transparent;color:#fff;z-index:200;}
 .no-background{background-color: transparent;}

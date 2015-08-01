@@ -33,16 +33,21 @@
 						<div class="tabs-content">
 							<!-- Manage Case and Question Here -->
 							<div class="content active" id="case">
-								<p>
-									<a style="margin-right:15px" href="#newstep" ng-click="newStepModal()">+ New Step</a>
-									<a style="margin-right:15px" href="#refresh" ng-click="getCase()"><span class="fi-refresh"></span> Refresh List</a>
-									<a target="_blank" style="margin-right:15px" href="<?php echo site_url('test/preview');?>/{{test.idTest}}">Test Preview</a>
-									<a onclick="return prompt('Copy this link and share to participant','http://linuxourse.me/test/join/')" style="margin-right:15px" href="#getlink">Get Link</a>
-								</p>
-								<small>click to update/delete step</small>
+								<div class="medium-6 columns">
+									<ul class="inline-list">
+										<li><a style="margin-right:15px" href="#newstep" ng-click="newStepModal()">+ New Step</a></li>
+										<li><a style="margin-right:15px" href="#refresh" ng-click="getCase()"><span class="fi-refresh"></span> Refresh List</a></li>
+										<li><a target="_blank" style="margin-right:15px" href="<?php echo site_url('test/preview');?>/{{test.idTest}}">Test Preview</a></li>
+										<li><a onclick="return prompt('Copy this link and share to participant','http://linuxourse.me/test/join/<?php echo $this->uri->segment(3);?>')" style="margin-right:15px" href="#getlink">Get Link</a></li>
+									</ul>
+								</div>
+								<div class="medium-6 columns">
+									<input style="height:15px" type="search" ng-model="searchcase" placeholder="search case">
+								</div>
+								<small> click to update/delete step</small>
 								<!-- list -->
 								<div id="caseList">
-									<a id="{{case.testCaseStep}}" ng-repeat="case in cases" href="#update" ng-click="updateStepModal(case.testCaseStep)">
+									<a id="{{case.testCaseStep}}" ng-repeat="case in cases | filter:searchcase as results track by case.idTestCase" href="#update" ng-click="updateStepModal(case.testCaseStep)">
 										<div style="vertical-align:middle" class="joinmateri row">
 											<div class="small-1 columns"><p>{{case.testCaseStep}}</p></div>
 											<div class="small-7 columns"><p><strong>Case</strong><br/>{{case.testCaseQuestion  | limitTo:500}}...</p></div>
@@ -56,6 +61,7 @@
 										</div>
 									</a>
 								</div>
+								<p ng-if="results.length == 0">step not found</p>
 								<!-- end of list -->
 							</div>
 							<!-- Manage Case and Question Here -->
@@ -78,14 +84,14 @@
 									<!-- found member list -->
 									<div ng-hide="searchMemberBox" class="medium-12 columns">
 										<div style="text-align:left" class="row">
-										<div class="medium-6 columns">
-											<h4>Found Member <small>{{searchKey}}, {{statusKey}}</small> <a ng-click="closeSearchBox()" href="#close">(x)</a></h4>
+											<div class="medium-6 columns">
+												<h4>Found Member <small>{{searchKey}}, {{statusKey}}</small> <a ng-click="closeSearchBox()" href="#close">(x)</a></h4>
+											</div>
 										</div>
-									</div>
 										<div ng-repeat="fp in foundpartisipants" class="medium-1 columns">
 											<p>
-												<a class="th" role="button" aria-label="Thumbnail" data-tooltip aria-haspopup="true" title="{{fp.username}}" href="#">
-													<img aria-hidden=true ng-src="<?php echo base_url('assets/img/avatar');?>/{{fp.pp}}"/>
+												<a href="testResult(fp.id_user)" class="th" role="button" aria-label="Thumbnail" data-tooltip aria-haspopup="true" title="{{fp.username}}">
+													<img aria-hidden=true ng-src="{{fp.pp}}"/>
 												</a>
 												<br/>
 												<a ng-click="addParticipant(fp.id_user)" class="primary label" href="#add-participant">+</a>
@@ -96,22 +102,24 @@
 									<!-- participants list -->
 									<div class="medium-12 columns">
 										<div style="text-align:left" class="row">
-										<div class="medium-6 columns">
-											<h4>{{participantshow}} <small>{{participantloader}}</small></h4>
+											<div class="medium-6 columns">
+												<h4>{{participantshow}} <small>{{participantloader}} (auto order by score,descending)</small></h4>
+											</div>
+											<div class="medium-6 columns">
+												<input style="height:15px" type="search" ng-model="searchparticipants" placeholder="search participants in list">
+												<ul style="float:right" class="inline-list">
+													<li><a ng-click="getParticipant('waiting')" href="#waiting-participant">Waiting</a></li>
+													<li><a ng-click="getParticipant('ongoing')" href="#ongoing-participant">Ongoing</a></li>
+													<li><a ng-click="getParticipant('completed')" href="#completed-participant">Completed</a></li>
+												</ul>
+											</div>
+											<hr/>
 										</div>
-										<div class="medium-6 columns">
-											<ul style="float:right" class="inline-list">
-											  <li><a ng-click="getParticipant('waiting')" href="#waiting-participant">Waiting</a></li>
-											  <li><a ng-click="getParticipant('ongoing')" href="#ongoing-participant">Ongoing</a></li>
-											  <li><a ng-click="getParticipant('completed')" href="#completed-participant">Completed</a></li>
-											</ul>
-										</div>
-										<hr/>
-									</div>
-										<div ng-repeat="participant in participants" class="medium-1 columns">
+										<p ng-if="resultspartc.length == 0" class="medium-12 columns">Participants not found</p>
+										<div ng-repeat="participant in participants | filter:searchparticipants as resultspartc" class="medium-1 columns">
 											<p>
-												<a class="th" role="button" aria-label="Thumbnail" data-tooltip aria-haspopup="true" title="{{fp.username}}}" href="#">
-													<img aria-hidden=true src="<?php echo base_url('assets/img/avatar');?>/{{fp.pp}}"/>
+												<a ng-click="testResult(participant.id_user)" class="th" role="button" aria-label="Thumbnail" data-tooltip aria-haspopup="true" title="{{participant.username}}" >
+													<img aria-hidden=true ng-src="{{participant.pp}}"/>
 												</a>
 												<br/>
 												<a class="alert label" href="#remove-participant">x</a>
@@ -248,6 +256,11 @@
 							<label for="newcommand" class="right inline">Command</label>
 						</div>
 						<div class="small-9 columns">
+							<div data-alert class="alert-box info">
+								Batasi command yang harus diinputkan participant dengan tanda ':'.<br/>
+								contoh : ls -l:ifconfig wlan0:mkdir newdir:rm -r newdir
+								<a href="#" class="close">&times;</a>
+							</div>
 							<textarea type="case" id="newcommand" row="4" ng-model="new.command" required></textarea>
 						</div>
 					</div>
@@ -308,6 +321,11 @@
 							<label for="command" class="right inline">Command</label>
 						</div>
 						<div class="small-9 columns">
+							<div data-alert class="alert-box info">
+								Batasi command yang harus diinputkan participant dengan tanda ':'.<br/>
+								contoh : ls -l:ifconfig wlan0:mkdir newdir:rm -r newdir
+								<a href="#" class="close">&times;</a>
+							</div>
 							<textarea type="case" id="command" row="4" ng-model="update.command" required></textarea>
 						</div>
 					</div>
@@ -335,7 +353,22 @@
 		<!-- end form add case -->
 		<a class="close-reveal-modal" aria-label="Close">&#215;</a>
 	</div>
+	<!-- detail score of user -->
+	<div id="testResult" class="reveal-modal small" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+		<h4 style="color:#000" id="modalTitle">{{score.username}} score ({{score.statusStart}})</h4>
+		<p><small>starttest:{{score.startDoTest}}, endDoTest:{{score.startDoTest}}</small></p>
+		<br/>
+		<!-- detail score -->
+		<h3>Total Score {{score.doTestScore}}</h3>
+		<p>total completed step : {{score.doTestResult.length}}</p>
+		<dl ng-repeat="result in score.doTestResult track by $index">
+			<dt>case : {{$index}}</dt><dt></dt>
+		</dl>	
+		<p ng-if="doTestResult.length < 1">Never do test</p>	
+		<!-- end of detail score -->
+		<a class="close-reveal-modal" aria-label="Close">&#215;</a>
+	</div>
 </span>
 <script type="text/javascript">
-var idtest = <?php echo $this->uri->segment(3);?>
+	var idtest = <?php echo $this->uri->segment(3);?>
 </script>
